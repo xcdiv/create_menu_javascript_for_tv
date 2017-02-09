@@ -1,0 +1,173 @@
+﻿#mini_key {
+    width: 940px;
+    display:none;
+}
+
+    #mini_key ul {
+        padding: 3px;
+        margin: 0;
+        clear: both;
+    }
+
+    #mini_key ul li {
+        width: 50px;
+        height: 50px;
+        text-align: center;
+        list-style: none;
+        float: left;
+        background-color: rgba(17, 28, 40,0.60);
+        color: #fff;
+        line-height: 50px;
+        padding: 3px;
+        margin: 3px;
+        overflow: hidden;
+        -moz-border-radius: 10px;
+        -webkit-border-radius: 10px;
+        border-radius: 7px;
+    }
+
+    #mini_key ul li.in_select {
+        background-color: #fff;
+        color: #000;
+        border: 1px solid #33ccff;
+    }
+
+    #mini_key ul li.un_select {
+        border: 0px solid #33ccff;
+        background-color: rgba(17, 28, 40,0.60);
+        color: #fff;
+    }
+
+#chinese_key_input ul li.in_select {
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #33ccff;
+}
+
+#chinese_key_input ul li.un_select {
+    border: 0px solid #33ccff;
+    background-color: rgba(17, 28, 40,0.60);
+    color: #fff;
+}
+
+#key_input {
+    width: 350px;
+    height: 50px;
+    text-align: center;
+    list-style: none;
+    float: left;
+    background-color: rgba(17, 28, 40,0.60);
+    color: #fff;
+    line-height: 50px;
+    margin: 1px;
+    overflow: hidden;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 7px;
+}
+
+#chinese_key_input {
+    width: 1280px;
+    height: 80px;
+    text-align: center;
+    list-style: none;
+    float: left;
+    background-color: rgba(17, 28, 40,0.60);
+    color: #fff;
+    line-height: 50px;
+    margin: 1px;
+    overflow: hidden;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 7px;
+}
+
+    #chinese_key_input ul li {
+        width: 70px;
+        height: 28px;
+        text-align: center;
+        list-style: none;
+        float: left;
+        background-color: rgba(17, 28, 40,0.60);
+        color: #fff;
+        line-height: 40px;
+        padding: 3px;
+        margin: 3px;
+        overflow: hidden;
+        -moz-border-radius: 10px;
+        -webkit-border-radius: 10px;
+        border-radius: 7px;
+    }
+
+    #chinese_key_input ul.chinese_key_input_out {
+        margin: 0;
+        padding: 0;
+        clear: both;
+    }
+
+#chinese_key_input_select {
+    width: 748px;
+    height: 68px;
+    overflow: hidden;
+}
+
+    #chinese_key_input_select ul {
+        width: 9000px;
+    }
+
+#chinese_key_input_out {
+    width: 748px;
+    height: 38px;
+    overflow: hidden;
+}
+
+
+
+    #chinese_key_input_out ul {
+        width: 9000px;
+    }
+
+        #chinese_key_input_out ul li.in_select {
+            width: 30px;
+            height: 28px;
+            text-align: center;
+            list-style: none;
+            float: left;
+            background-color: rgba(255, 255, 255,0.60);
+            color: #111;
+            line-height: 28px;
+            padding: 1px;
+            margin: 0;
+            overflow: hidden;
+            -moz-border-radius: 0;
+            -webkit-border-radius: 0;
+            border-radius: 0;
+        }
+
+
+        #chinese_key_input_out ul li.un_select {
+            width: 30px;
+            height: 28px;
+            text-align: center;
+            list-style: none;
+            float: left;
+            background-color: rgba(17, 28, 40,0.60);
+            color: #fff;
+            line-height: 40px;
+            padding: 1px;
+            margin: 0;
+            overflow: hidden;
+            -moz-border-radius: 0;
+            -webkit-border-radius: 0;
+            border-radius: 0;
+        }
+
+#chinese_key_input ul.chinese_key_input_select {
+    margin: 0;
+    padding: 0;
+    clear: both;
+}
+
+#chinese_key_input_select ul {
+    width: 9000px;
+}

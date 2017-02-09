@@ -1,0 +1,308 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="page_resolution" content="1280*720" />
+    <script src="jquery-1.4.4.min.js"></script>
+    <script src="create_menu_DVBv7.js"></script>
+
+    <!--script-->
+    <script src="index.js"></script>
+    <link href="input.css" rel="stylesheet" />
+    <link href="global.css" rel="stylesheet" />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #eee;
+        }
+
+        .area_select {
+            position: absolute;
+            width: 1280px;
+            height: 700px;
+            margin-left: 99px;
+            padding: 0;
+            top: 149px;
+            left: 0;
+        }
+
+            .area_select ul {
+                width: 490px;
+            }
+
+                .area_select ul li {
+                    list-style: none;
+                    text-align: center;
+                    font-size: 28px;
+                    line-height: 45px;
+                    font-family: "Microsoft YaHei" !important;
+                    border: 5px solid #8f9724;
+                }
+
+
+                    .area_select ul li.in_select {
+                       
+                    }
+
+
+        #area_line1 {
+            font-family: "Microsoft YaHei" !important;
+            list-style-type: none;
+        }
+
+            #area_line1 li {
+                line-height: 45px;
+                height: 100px;
+                width: 100px;
+                text-align: center;
+                font-size: 31px;
+                color: #fff;
+                float: left;
+                margin-left: 5px;
+                list-style: none;
+                margin-top: 16px;
+            }
+
+                #area_line1 li.in_select {
+                    color: #fff;
+                    font-size: 31px;
+                    background: #13baff;
+                    color: #fff;
+                    float: left;
+                    line-height: 45px;
+                }
+
+                #area_line1 li.un_select {
+                    font-size: 31px;
+                    color: #fff;
+                    line-height: 45px;
+                    float: left;
+                }
+
+        #area_line2 {
+            font-family: "Microsoft YaHei" !important;
+            list-style-type: none;
+        }
+
+            #area_line2 li {
+                line-height: 45px;
+                height: 100px;
+                width: 100px;
+                text-align: center;
+                font-size: 31px;
+                color: #fff;
+                float: left;
+                margin-left: 5px;
+                list-style: none;
+                margin-top: 16px;
+            }
+
+                #area_line2 li.in_select {
+                    color: #fff;
+                    font-size: 31px;
+                    background: #ff6a00;
+                    color: #fff;
+                    float: left;
+                    line-height: 45px;
+                }
+
+                #area_line2 li.un_select {
+                    font-size: 31px;
+                    color: #fff;
+                    line-height: 45px;
+                    float: left;
+                }
+
+
+
+
+        #panel {
+            left: 600px;
+        }
+
+        .ul_block {
+            font-family: "Microsoft YaHei" !important;
+            list-style-type: none;
+        }
+
+            .ul_block li {
+                line-height: 45px;
+                height: 100px;
+                width: 100px;
+                text-align: center;
+                font-size: 31px;
+                color: #fff;
+                float: left;
+                margin-left: 5px;
+                list-style: none;
+                margin-top: 16px;
+            }
+
+                .ul_block li.in_select {
+                    color: #fff;
+                    font-size: 31px;
+                    background: #13baff;
+                    color: #fff;
+                    float: left;
+                    line-height: 45px;
+                    height: 100px;
+                    width: 100px;
+                }
+
+                .ul_block li.un_select {
+                    font-size: 31px;
+                    color: #fff;
+                    line-height: 45px;
+                    float: left;
+                }
+
+
+        #A4 {
+        background:url(images/right.png);
+        
+        }
+
+        #point {
+            display: block;
+            border: 5px solid #f500ff;
+            position: absolute;
+            z-index: 200;
+            width: 155px;
+            height: 221px;
+            top: 146px;
+            left: 74px;
+            -moz-transition-duration: 50ms;
+            -webkit-transition-duration: 50ms;
+        }
+    </style>
+</head>
+<body leftmargin="0" topmargin="0">
+
+
+    <!-- panel1 -->
+    <div id="area_select" class="area_select">
+
+
+        <ul id="area_line1">
+            <li keyclick="!show_mini_key()" inclass="in_select" outclass="un_select" path="':jump{#area_select,#area_line2 li[path]:eq(index)}',':next',':jump{#area_select,#area_line2 li[path]:eq(index)}',':prev'" href="index.html" pointstyle="display:block;left: 86px;top: 182px; width: 117px; height: 121px;">KEY<dl></dl>
+                <img alt="" class="point" /></li>
+            <li inclass="in_select" outclass="un_select" path="':jump{#area_select,#area_line2 li[path]:eq(index)}',':next',':jump{#area_select,#area_line2 li[path]:eq(index)}',':prev'" href="index.html" pointstyle="display:block;left: -cm-calc( 86-376+86 )px; top: 182px; width: 97px; height: 99px;">B2<dl></dl>
+                <img alt="" class="point" /></li>
+            <li inclass="in_select" outclass="un_select" path="':jump{#area_select,#area_line2 li[path]:eq(index)}',':next',':jump{#area_select,#area_line2 li[path]:eq(index)}',':prev'" href="index.html" pointstyle="display:block;left: 301px; top: 182px; width: 97px; height: 99px;">B3<dl></dl>
+                <img alt="" class="point" /></li>
+            <li inclass="in_select" outclass="un_select" path="':jump{#area_select,#area_line2 li[path]:eq(index)}',':next',':jump{#area_select,#area_line2 li[path]:eq(index)}',':prev'" href="index.html" pointstyle="display:block;left: 411px; top: 183px; width: 97px; height: 99px;">B4<dl></dl>
+                <img alt="" class="point" /></li>
+        </ul>
+
+
+        <ul id="area_line2">
+            <li inclass="in_select" outclass="un_select" path="':jump{#area_select,#area_line1 li[path]:eq(index)}',':next',':jump{#area_select,#area_line1 li[path]:eq(index)}',':prev'" href="index.html" pointstyle="display:block;left: 86px; top: 253px; width: 97px; height: 99px;">A1<dl></dl>
+                <img alt="" class="point" /></li>
+            <li inclass="in_select" outclass="un_select" path="':jump{#area_select,#area_line1 li[path]:eq(index)}',':next',':jump{#area_select,#area_line1 li[path]:eq(index)}',':prev'" href="index.html" pointstyle="display:block;left: 201px; top: 263px; width: 97px; height: 99px;">A2<dl></dl>
+                <img alt="" class="point" /></li>
+            <li inclass="in_select" outclass="un_select" path="':jump{#area_select,#area_line1 li[path]:eq(index)}',':next',':jump{#area_select,#area_line1 li[path]:eq(index)}',':prev'" href="index.html" pointstyle="display:block;left: 301px; top: 273px; width: 97px; height: 99px;">A3<dl></dl>
+                <img alt="" class="point" /></li>
+            <li id="A4" inclass="in_select" outclass="un_select" path="':jump{#area_select,#area_line1 li[path]:eq(index)}',':jump{#panel,#UI1 li[path]:eq(index)}',':prev',':jump{#panel,#UI1 li[path]:eq(index)}'" href="index.html" pointstyle="display:block;left: 411px; top:283px; width: 97px; height: 99px;">A4<dl></dl>
+                <img alt="" class="point" /></li>
+        </ul> 
+
+    </div>
+    <!-- panel2 -->
+    <div id="panel" class="area_select">
+        <ul id="UI1" class="ul_block">
+            <li keyclick="!show_mini_key()" inclass="in_select" outclass="un_select" path="':jump{#panel,#UI2 li[path]:eq(index)}',':next',':jump{#panel,#UI2 li[path]:eq(index)}',':prev'" href="index.html" pointstyle="display:none;">B1<dl></dl>
+                <img alt="" class="point" /></li>
+            <li inclass="in_select" outclass="un_select" path="':jump{#panel,#UI2 li[path]:eq(index)}',':next',':jump{#panel,#UI2 li[path]:eq(index)}',':prev'" href="index.html" pointstyle="display:none;">B2<dl></dl>
+                <img alt="" class="point" /></li>
+            <li inclass="in_select" outclass="un_select" path="':jump{#panel,#UI2 li[path]:eq(index)}',':next',':jump{#panel,#UI2 li[path]:eq(index)}',':prev'" href="index.html" pointstyle="display:none;">B3<dl></dl>
+                <img alt="" class="point" /></li>
+            <li inclass="in_select" outclass="un_select" path="':jump{#panel,#UI2 li[path]:eq(index)}',':next',':jump{#panel,#UI2 li[path]:eq(index)}',':prev'" href="index.html" pointstyle="display:none;">B4<dl></dl>
+                <img alt="" class="point" /></li>
+        </ul>
+
+
+        <ul id="UI2" class="ul_block">
+            <li inclass="in_select" outclass="un_select" path="':jump{#panel,#UI1 li[path]:eq(index)}',':next',':jump{#panel,#UI1 li[path]:eq(index)}',':prev'" href="index.html" pointstyle="display:none;">A1<dl></dl>
+                <img alt="" class="point" /></li>
+            <li inclass="in_select" outclass="un_select" path="':jump{#panel,#UI1 li[path]:eq(index)}',':next',':jump{#panel,#UI1 li[path]:eq(index)}',':prev'" href="index.html" pointstyle="display:none;">A2<dl></dl>
+                <img alt="" class="point" /></li>
+            <li inclass="in_select" outclass="un_select" path="':jump{#panel,#UI1 li[path]:eq(index)}',':next',':jump{#panel,#UI1 li[path]:eq(index)}',':prev'" href="index.html" pointstyle="display:none;">A3<dl></dl>
+                <img alt="" class="point" /></li>
+            <li inclass="in_select" outclass="un_select" path="':jump{#panel,#UI1 li[path]:eq(index)}',':next',':jump{#panel,#UI1 li[path]:eq(index)}',':prev'" href="index.html" pointstyle="display:none;">A4<dl></dl>
+                <img alt="" class="point" /></li>
+        </ul>
+
+
+    </div>
+
+
+    <!--soft keyborad-->
+    <div id="mini_key" style="display: none;">
+
+        <!--path=up,right,down,left-->
+        <ul id="mini_key_line0">
+            <li keyclick="!cm.input_backspace_tmp('#key_input')" path="'!input_change_chs_up()',':next',':jump{#mini_key_line1,li:eq(index)[path]}',':prev'" outclass="un_select" inclass="in_select" id="mini_key--" class="un_select" select="" pointstyle="display:none;">退格</li>
+            <li keyclick="!input_sync(0)" path="'!input_change_chs_up()',':next',':jump{#mini_key_line1,li:eq(index)[path]}',':prev'" outclass="un_select" inclass="in_select" id="mini_key0" class="un_select" select="" pointstyle="display:none;">0</li>
+            <li keyclick="!input_sync(_)" path="'!input_change_chs_up()',':next',':jump{#mini_key_line1,li:eq(index)[path]}',':prev'" outclass="un_select" inclass="in_select" id="mini_key_" class="un_select" select="" pointstyle="display:none;">空格</li>
+            <li keyclick="!input_change_type()" path="'!input_change_chs_up()',':next',':jump{#mini_key_line1,li:eq(index)[path]}',':prev'" outclass="un_select" inclass="in_select" style="" id="mini_key_type" class="un_select" select="" pointstyle="display:none;">中文</li>
+            <li keyclick="!input_sync(.)" path="'!input_change_chs_up()',':next',':jump{#mini_key_line1,li:eq(index)[path]}',':prev'" outclass="un_select" inclass="in_select" id="Li5" class="un_select" select="">.</li>
+            <li keyclick="!input_sync(+)" path="'!input_change_chs_up()',':next',':jump{#mini_key_line1,li:eq(index)[path]}',':prev'" outclass="un_select" inclass="in_select" id="Li1" class="un_select" select="">+</li>
+            <li keyclick="!input_sync(-)" path="'!input_change_chs_up()',':next',':jump{#mini_key_line1,li:eq(index)[path]}',':prev'" outclass="un_select" inclass="in_select" id="Li2" class="un_select" select="">-</li>
+            <li keyclick="!input_sync(/)" path="'!input_change_chs_up()',':next',':jump{#mini_key_line1,li:eq(index)[path]}',':prev'" outclass="un_select" inclass="in_select" id="Li3" class="un_select" select="">/</li>
+            <li keyclick="!input_sync(@)" path="'!input_change_chs_up()',':next',':jump{#mini_key_line1,li:eq(index)[path]}',':prev'" outclass="un_select" inclass="in_select" id="Li4" class="un_select" select="">@</li>
+            <li keyclick="!!input_return()" path="'!input_change_chs_up()',':next',':jump{#mini_key_line1,li:eq(index)[path]}',':prev'" outclass="un_select" inclass="in_select" id="mini_keyok" class="un_select" select="">确认</li>
+
+            <li style="clear: both; display: none;"></li>
+        </ul>
+        <ul id="mini_key_line1">
+            <li keyclick="!input_sync(1)" path="':jump{#mini_key_line0,li:eq(index)[path]}',':next',':jump{#mini_key_line2,li:eq(index)[path]}',':prev'" outclass="un_select" inclass="in_select" id="mini_key1">1</li>
+            <li keyclick="!input_sync(2)" path="':jump{#mini_key_line0,li:eq(index)[path]}',':next',':jump{#mini_key_line2,li:eq(index)[path]}',':prev'" outclass="un_select" inclass="in_select" id="mini_key2">2</li>
+            <li keyclick="!input_sync(3)" path="':jump{#mini_key_line0,li:eq(index)[path]}',':next',':jump{#mini_key_line2,li:eq(index)[path]}',':prev'" outclass="un_select" inclass="in_select" id="mini_key3">3</li>
+            <li keyclick="!input_sync(A)" path="':jump{#mini_key_line0,li:eq(index)[path]}',':next',':jump{#mini_key_line2,li:eq(index)[path]}',':prev'" outclass="un_select" inclass="in_select" id="mini_keyA">A</li>
+            <li keyclick="!input_sync(B)" path="':jump{#mini_key_line0,li:eq(index)[path]}',':next',':jump{#mini_key_line2,li:eq(index)[path]}',':prev'" outclass="un_select" inclass="in_select" id="mini_keyB">B</li>
+            <li keyclick="!input_sync(C)" path="':jump{#mini_key_line0,li:eq(index)[path]}',':next',':jump{#mini_key_line2,li:eq(index)[path]}',':prev'" outclass="un_select" inclass="in_select" id="mini_keyC">C</li>
+            <li keyclick="!input_sync(D)" path="':jump{#mini_key_line0,li:eq(index)[path]}',':next',':jump{#mini_key_line2,li:eq(index)[path]}',':prev'" outclass="un_select" inclass="in_select" id="mini_keyD">D</li>
+            <li keyclick="!input_sync(E)" path="':jump{#mini_key_line0,li:eq(index)[path]}',':next',':jump{#mini_key_line2,li:eq(index)[path]}',':prev'" outclass="un_select" inclass="in_select" id="mini_keyE">E</li>
+            <li keyclick="!input_sync(F)" path="':jump{#mini_key_line0,li:eq(index)[path]}',':next',':jump{#mini_key_line2,li:eq(index)[path]}',':prev'" outclass="un_select" inclass="in_select" id="mini_keyF">F</li>
+            <li keyclick="!input_sync(G)" path="':jump{#mini_key_line0,li:eq(index)[path]}',':next',':jump{#mini_key_line2,li:eq(index)[path]}',':prev'" outclass="un_select" inclass="in_select" id="mini_keyG">G</li>
+            <li keyclick="!input_sync(H)" path="':jump{#mini_key_line0,li:eq(index)[path]}',':next',':jump{#mini_key_line2,li:eq(index)[path]}',':prev'" outclass="un_select" inclass="in_select" id="mini_keyH">H</li>
+            <li keyclick="!input_sync(I)" path="':jump{#mini_key_line0,li:eq(index)[path]}',':next',':jump{#mini_key_line2,li:eq(index)[path]}',':prev'" outclass="un_select" inclass="in_select" id="mini_keyI">I</li>
+            <li style="clear: both; display: none;"></li>
+        </ul>
+        <ul id="mini_key_line2">
+            <li keyclick="!input_sync(4)" path="':jump{#mini_key_line1,li:eq(index)[path]}',':next',':jump{#mini_key_line3,li:eq(index)[path]}',':prev'" outclass="un_select" inclass="in_select" id="mini_key4">4</li>
+            <li keyclick="!input_sync(5)" path="':jump{#mini_key_line1,li:eq(index)[path]}',':next',':jump{#mini_key_line3,li:eq(index)[path]}',':prev'" outclass="un_select" inclass="in_select" id="mini_key5">5</li>
+            <li keyclick="!input_sync(6)" path="':jump{#mini_key_line1,li:eq(index)[path]}',':next',':jump{#mini_key_line3,li:eq(index)[path]}',':prev'" outclass="un_select" inclass="in_select" id="mini_key6">6</li>
+            <li keyclick="!input_sync(J)" path="':jump{#mini_key_line1,li:eq(index)[path]}',':next',':jump{#mini_key_line3,li:eq(index)[path]}',':prev'" outclass="un_select" inclass="in_select" id="mini_keyJ">J</li>
+            <li keyclick="!input_sync(K)" path="':jump{#mini_key_line1,li:eq(index)[path]}',':next',':jump{#mini_key_line3,li:eq(index)[path]}',':prev'" outclass="un_select" inclass="in_select" id="mini_keyK">K</li>
+            <li keyclick="!input_sync(L)" path="':jump{#mini_key_line1,li:eq(index)[path]}',':next',':jump{#mini_key_line3,li:eq(index)[path]}',':prev'" outclass="un_select" inclass="in_select" id="mini_keyL">L</li>
+            <li keyclick="!input_sync(M)" path="':jump{#mini_key_line1,li:eq(index)[path]}',':next',':jump{#mini_key_line3,li:eq(index)[path]}',':prev'" outclass="un_select" inclass="in_select" id="mini_keyM">M</li>
+            <li keyclick="!input_sync(N)" path="':jump{#mini_key_line1,li:eq(index)[path]}',':next',':jump{#mini_key_line3,li:eq(index)[path]}',':prev'" outclass="un_select" inclass="in_select" id="mini_keyN">N</li>
+            <li keyclick="!input_sync(O)" path="':jump{#mini_key_line1,li:eq(index)[path]}',':next',':jump{#mini_key_line3,li:eq(index)[path]}',':prev'" outclass="un_select" inclass="in_select" id="mini_keyO">O</li>
+            <li keyclick="!input_sync(P)" path="':jump{#mini_key_line1,li:eq(index)[path]}',':next',':jump{#mini_key_line3,li:eq(index)[path]}',':prev'" outclass="un_select" inclass="in_select" id="mini_keyP">P</li>
+            <li keyclick="!input_sync(Q)" path="':jump{#mini_key_line1,li:eq(index)[path]}',':next',':jump{#mini_key_line3,li:eq(index)[path]}',':prev'" outclass="un_select" inclass="in_select" id="mini_keyQ">Q</li>
+            <li keyclick="!input_sync(R)" path="':jump{#mini_key_line1,li:eq(index)[path]}',':next',':jump{#mini_key_line3,li:eq(index)[path]}',':prev'" outclass="un_select" inclass="in_select" id="mini_keyR">R</li>
+
+            <li style="clear: both; display: none;"></li>
+        </ul>
+        <ul id="mini_key_line3">
+            <li keyclick="!input_sync(7)" path="':jump{#mini_key_line2,li:eq(index)[path]}',':next',':jump{#mini_key_line0,li:eq(index)[path]}',':prev'" outclass="un_select" inclass="in_select" id="mini_key7">7</li>
+            <li keyclick="!input_sync(8)" path="':jump{#mini_key_line2,li:eq(index)[path]}',':next',':jump{#mini_key_line0,li:eq(index)[path]}',':prev'" outclass="un_select" inclass="in_select" id="mini_key8">8</li>
+            <li keyclick="!input_sync(9)" path="':jump{#mini_key_line2,li:eq(index)[path]}',':next',':jump{#mini_key_line0,li:eq(index)[path]}',':prev'" outclass="un_select" inclass="in_select" id="mini_key9">9</li>
+
+            <li keyclick="!input_sync(S)" path="':jump{#mini_key_line2,li:eq(index)[path]}',':next',':jump{#mini_key_line3,li:eq(index)[path]}',':prev'" outclass="un_select" inclass="in_select" id="mini_keyS">S</li>
+            <li keyclick="!input_sync(T)" path="':jump{#mini_key_line2,li:eq(index)[path]}',':next',':jump{#mini_key_line3,li:eq(index)[path]}',':prev'" outclass="un_select" inclass="in_select" id="mini_keyT">T</li>
+            <li keyclick="!input_sync(U)" path="':jump{#mini_key_line2,li:eq(index)[path]}',':next',':jump{#mini_key_line3,li:eq(index)[path]}',':prev'" outclass="un_select" inclass="in_select" id="mini_keyU">U</li>
+            <li keyclick="!input_sync(V)" path="':jump{#mini_key_line2,li:eq(index)[path]}',':next',':jump{#mini_key_line3,li:eq(index)[path]}',':prev'" outclass="un_select" inclass="in_select" id="mini_keyV">V</li>
+            <li keyclick="!input_sync(W)" path="':jump{#mini_key_line2,li:eq(index)[path]}',':next',':jump{#mini_key_line3,li:eq(index)[path]}',':prev'" outclass="un_select" inclass="in_select" id="mini_keyW">W</li>
+            <li keyclick="!input_sync(X)" path="':jump{#mini_key_line2,li:eq(index)[path]}',':next',':jump{#mini_key_line3,li:eq(index)[path]}',':prev'" outclass="un_select" inclass="in_select" id="mini_keyX">X</li>
+            <li keyclick="!input_sync(Y)" path="':jump{#mini_key_line2,li:eq(index)[path]}',':next',':jump{#mini_key_line3,li:eq(index)[path]}',':prev'" outclass="un_select" inclass="in_select" id="mini_keyY">Y</li>
+            <li keyclick="!input_sync(Z)" path="':jump{#mini_key_line2,li:eq(index)[path]}',':next',':jump{#mini_key_line3,li:eq(index)[path]}',':prev'" outclass="un_select" inclass="in_select" id="mini_keyZ">Z</li>
+            <li style="clear: both; display: none;"></li>
+        </ul>
+    </div>
+    <div id="point"></div>
+
+</body>
+</html>
