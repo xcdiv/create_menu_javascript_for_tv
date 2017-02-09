@@ -38,9 +38,9 @@ Encapsulates the keyboard's top, bottom, and right sides and confirms the corres
                    :function 内置方法
                    ===========================================
                        :prev
-                          [select=true] 上一个对象
+                         上一个[path]对象
                        :next
-                          [select=true] 下一个对象 
+                         下一个[path]对象 
                    
                    @http://127.0.0.1/2.html 跳转到谋网页
                    
@@ -76,4 +76,4 @@ Encapsulates the keyboard's top, bottom, and right sides and confirms the corres
                离开时触发function事件
 
            param=>parentstyle
-               
+               父级样式样式
