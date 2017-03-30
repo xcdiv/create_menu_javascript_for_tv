@@ -1,17 +1,16 @@
-﻿
-DOM 扩展框架 create_menu_DVB for TV version 0.7
 
-Project Objectives:
+###DOM 扩展框架 create_menu_DVB for TV version 0.7
+
+##Project Objectives:
 Encapsulates the keyboard's top, bottom, and right sides and confirms the corresponding logic with the HTML DOM, simplifying the handling of events for each DOM object by encapsulating the DOM's attributes
 (I am sorry, because the time constraints and examples are very simple, I will gradually improve)
 
-项目目标：
+##项目目标：
 封装键盘的上下左右和确认与HTML DOM之间相应的逻辑，通过DOM的属性封装简化了每个DOM对象的事件封装处理
 (很抱歉，因为时间紧张说明和例子都很简单我会逐步完善的)
 
-===========================
-初始化例子
-===========================
+##初始化例子
+```html
 <html>
 <head>
 <!--引入基本库-->
@@ -113,17 +112,15 @@ var f_eval = {
 <div id="point"></div>
 
 </body>
+```
 
-
-===========================
-f_eval函数体
-===========================
+##f_eval函数体
+ 
 f_eval是一个快速的eval方法，如果方法写入f_eval中，例如：function_demo，执行到这种方法的时候会优先调用function_demo，当然如果在f_eval以外声明的其它方法将调用JavaScript的Eval的函数。
 f_eval的内置函数调用效率会高于JavaScript的Eval调用速度，但是由于嵌入式设备的兼容性所以内置的f_eval声明的方法只能有一个string类型的参数。
 
-===========================
-实现上下左右的路径操作：PATH
-===========================
+##实现上下左右的路径操作：PATH
+
 CM（create_menu_DVB）主要实现在HTML增加特殊attrion项目实现键盘的操作逻辑，其中在<li>中增加<li path="....">标签来记录下一步键盘需要向什么方向执行，按照CSS的简写规范实现上右下左,
 
 param=>path 表示触发上右下左的按键的跳转对象
@@ -150,9 +147,10 @@ param=>path 表示触发上右下左的按键的跳转对象
 获取当前DOM的方法$('[select=true]')
 
                            
-===========================================
-path的内置方法
-===========================================
+##path的内置方法
+
+```css
+ 
     :prev
         同父级的上一个[path]对象（必须是可显示的）
     :next
@@ -160,15 +158,21 @@ path的内置方法
                    
 	@http://127.0.0.1/2.html 跳转到谋网页
 
+```
+
 例如：
+
+```html
 <div id="demo">
 	<ul>
 		<li>按钮1</li> 
 		<li>按钮2</li> 
 	</ul>
 </div>
+```
 
 增加path后   
+```html
 <div id="demo">
 	<ul>
 	<li path='#demo ul li:eq(0)','#demo ul li:eq(1)','#demo ul li:eq(0)','#demo ul li:eq(1)'>按钮1</li>
@@ -177,7 +181,7 @@ path的内置方法
 </div>
 
 <li panel="#area_line0|1|8|left" inclass="in_select" outclass="un_select" path="':jump{#area_line3,li[path]:first}',':next',':jump{#area_select,#movieWnd}',':prev'" pointstyle="display:none;" class="un_select" serviceid="462">老年生活</li>
-
+```
 
 ========================
 光标指针
@@ -190,6 +194,7 @@ path的内置方法
         表示如果到当前位置光标的样式。
 	例如：
 	style定义:
+	```css
 	#point{
 		position: absolute; position: absolute;
 		left: 67px;
@@ -198,11 +203,14 @@ path的内置方法
 		height: 410px;
 		z-index: 99;
 	}
+	```
 
 	HTML:
+	```html
 	<li path='#demo ul li:eq(0)','#demo ul li:eq(1)','#demo ul li:eq(0)','#demo ul li:eq(1)' pointstyle="left: 67px;width: 732px;height: 410px;z-index: 99;" pointstyle="left: 267px;top: 294px;">按钮1</li>
+	```
 	全局加一个<div id="point"></div>
-
+	
 
 2、inclass或者outclass的class样式
 		param=>inclass
@@ -212,6 +220,7 @@ path的内置方法
 
 
 	例如：
+	```css
 	style定义：
 	 .in_select {
         color: #fff;
@@ -228,10 +237,11 @@ path的内置方法
         line-height: 45px;
         float: left;
                 }
-
+```
 	HTML:
+	```html
 	<li path='#demo ul li:eq(0)','#demo ul li:eq(1)','#demo ul li:eq(0)','#demo ul li:eq(1)' inclass="in_select" outclass="un_select">按钮1</li>
-
+	```
 3、instyle或者instyle的直接样式
 	param=>instyle
         激活当前的dom的样式处理
@@ -240,18 +250,16 @@ path的内置方法
         离开当前的dom的样式处理  
 	*与inclass或者outclass的规则类似
 		 
-========================
-当前光标位置
-========================   
+##当前光标位置 
+
     param=>select
         表示全局唯一标示的选中处理
         true或''
 
 	<li ............ select="true">1</li>
 
-========================
-确认事件
-========================
+##确认事件 
+
     param=>keyclick
         标示处理'确认'按钮，与param=>path近似，但只能触发一个对象，所以不需要''包裹
                
@@ -261,41 +269,39 @@ path的内置方法
         myfunc2() 
                
         
-========================
-位置选中激活触发器
-========================               
+##位置选中激活触发器
+
+            
 	param=>trigger
 		当select=true的时候触发function事件
 
 	<li ............  tigger="!demo1(hello)">1</li>
-========================
-位置离开激活触发器
-========================                  
+
+
+##位置离开激活触发器
+                 
 	param=>leave_trigger
 		离开时触发function事件
 
 	<li ............  leave_trigger="!demo1(hello)">1</li>
 
-========================
-位置选中激活触发修改父级别样式
-========================  
+##位置选中激活触发修改父级别样式
+ 
 	param=>parentstyle
 		父级样式样式
 	<ul id="abcd">
 		<li ............  parentstyle="#abcd|top:1000px;">1</li>
 	</ul>
 
-========================
-跳转
-========================  
+##跳转
+ 
 	param=>href
 		http标准地址即可
 
 	<li ............  href="http://www.baidu.com">1</li>
 
-========================
-panel滑动区块
-========================
+##panel滑动区块
+
 	panel是实现滑动光标块的效果
 	代码中初始化：
 	首先定义panel的基础模板，一个页面可定义多个例如：
