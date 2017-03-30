@@ -1,7 +1,4 @@
-﻿//=========================================//
-//embedded STB compatible keyboard code    //
-//=========================================//
-var key = {
+﻿var key = {
     Up: 38,
     Down: 40,
     Left: 37,
@@ -202,10 +199,58 @@ var Event = function (_event) {
 
 
 
-//=============================//
-//jquery alias change $=>$j    //
-//============================//
+//Beta 4.2
 var $j = jQuery.noConflict();
+
+
+if (typeof JSON == "undefined") {
+    JSON = {
+        parse: function (text) {
+
+            if (window.navigator.userAgent.indexOf("Chrome") !== -1) {
+                return new Function("return " + text)();
+            }
+            return eval("(" + text + ")");
+        }
+       , stringify: function (jsObj) {
+           var stack1 = [];
+           var stack2 = [];
+           var process = function (obj) { if (obj && typeof obj == "object") { return obj; } else if (typeof obj == "string") { return "\"" + obj.replace(/\\/g, "\\\\").replace(/"/g, "\\\"") + "\""; } else { return obj + ""; } };
+           stack1.push(process(jsObj)); while (stack1.length) {
+               var o = stack1.pop(); if (typeof o == "object") {
+                   var i = null;
+                   if (o instanceof Array) {
+                       stack1.push("["); for (i = 0; i < o.length; i++) { stack1.push(process(o[i])); stack1.push(","); } if (i) {
+                           stack1.pop();
+                       } stack1.push("]");
+                   } else {
+                       stack1.push("{"); for (i in o) { stack1.push("\"" + i + "\":"); stack1.push(process(o[i])); stack1.push(","); } if (i) {
+                           stack1.pop();
+                       } stack1.push("}");
+                   }
+               } else {
+                   stack2.unshift(o);
+               }
+           } return stack2.join("");
+       }, stringify1: function (jsonObj) {
+           var jsonBuffer = []; var type = typeof jsonObj;
+           if (type === "object") {
+               if (jsonObj === null) { jsonBuffer.push(jsonObj + ""); } else {
+                   if (jsonObj instanceof Array) {
+                       jsonBuffer.push("["); for (var i = 0; i < jsonObj.length; i++) { jsonBuffer.push(JSON.stringify1(jsonObj[i])); jsonBuffer.push(","); } if (i) {
+                           jsonBuffer.pop();
+                       } jsonBuffer.push("]");
+                   } else {
+                       jsonBuffer.push("{"); for (var j in jsonObj) { jsonBuffer.push("\"" + j + "\":" + JSON.stringify1(jsonObj[j])); jsonBuffer.push(","); } if (j) {
+                           jsonBuffer.pop();
+                       } jsonBuffer.push("}");
+                   }
+               }
+           } else if (type == "string") { jsonBuffer.push("\"" + jsonObj.replace(/\\/g, "\\\\").replace(/"/g, "\\\"") + "\""); } else { jsonBuffer.push(jsonObj + ""); } return jsonBuffer.join("");
+       }
+    };
+}
+
 
 String.prototype.trim = function () {
     // 用正则表达式将前后空格  
@@ -230,29 +275,436 @@ String.prototype.format = function () {
         });
 };
 
+//if (!Array.prototype.contains) {
+
+//    Array.prototype.contains = function (obj) {
+//        var i = this.length;
+//        while (i--) {
+//            if (this[i] === obj) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
+//}
+var rand = {};
+rand.get = function (begin, end) {
+    return Math.floor(Math.random() * (end - begin)) + begin;
+};
+
+//window.location.host;
+//alert(request.QueryString("a"));
+var request = {
+    QueryString: function (val) {
+        var uri = window.location.search;
+        var re = new RegExp("" + val + "\=([^\&\?]*)", "ig");
+        return ((uri.match(re)) ? (uri.match(re)[0].substr(val.length + 1)) : null);
+    },
+    QueryStringSelect: function (args) {
+        var uri = window.location.search;
+        var re = /\w*\=([^\&\?]*)/ig;
+        var retval = [];
+        while ((arr = re.exec(uri)) != null) {
+            var _li = arr[0].split('=');
+            //retval.push(arr[0]);
+            for (var i = 0; i < args.length; i++) {
+                if (_li[0] == args[i]) {
+                    retval.push(_li[0] + '=' + _li[1]);
+                }
+            }
+        }
+        return retval.join('&');
+    },
+    QueryStrings: function () {
+        var uri = window.location.search;
+        var re = /\w*\=([^\&\?]*)/ig;
+        var retval = [];
+        while ((arr = re.exec(uri)) != null)
+            retval.push(arr[0]);
+        return retval;
+    },
+    setQuery: function (val1, val2) {
+        var a = this.QueryStrings();
+        var retval = "";
+        var seted = false;
+        var re = new RegExp("^" + val1 + "\=([^\&\?]*)$j", "ig");
+        for (var i = 0; i < a.length; i++) {
+            if (re.test(a[i])) {
+                seted = true;
+                a[i] = val1 + "=" + val2;
+            }
+        }
+        retval = a.join("&");
+        return "?" + retval + (seted ? "" : (retval ? "&" : "") + val1 + "=" + val2);
+    },
+    getSURL: function () {
+        return 'http://' + window.location.host + '' + window.location.pathname;
+    }
+};
+
+var Timewait_obj = [];
+
+var getHttpRequest = function (val, wait, func) {
+    var _data = [];
+
+    if (typeof wait != "undefined" && typeof func != "undefined") {
+        Ajax.get(val, function (data) {
+            func(data);
+        }, false, false, wait);
+
+    } else {
+
+        Ajax.get(val, function (data) {
+            _data = data;
+        }, false, false);
+
+    }
+    return _data;
+};
+
+
+/*
+ 类 Cookie
+ 将此类放入用到的js文件中即可使用
+ 1.add(name,value,100); 添加一个cookie
+ 2.get(name);
+ 3.remove(name);
+ 用例:
+ Cookie.add("sk","ss",3);
+ _alert(cookie.get("sk"));
+ Cookie.remove("sk");
+ */
+var Cookie = new function () {
+    //添加cookie
+    this.add = function (name, value, hours) {
+        var life = new Date().getTime();
+        life += hours * 1000 * 60;
+        var cookieStr = name + "=" + escape(value) + ";expires=" + new Date(life).toGMTString() + ";path=/";
+        document.cookie = cookieStr;
+    };
+    //获取cookie值
+    this.get = function (name) {
+        var cookies = document.cookie.split(";");
+        if (cookies.length > 0) {
+            var cookie = cookies[0].split("=");
+            if (cookie[0] == name)
+                return unescape(cookie[1]);
+        }
+        return null;
+    };
+    //删除cookie
+    this.remove = function (name) {
+
+        if (typeof name == "object") {
+            for (var i = 0; i < name.length; i++) {
+                this._remove(name[i]);
+            }
+        }
+
+
+
+    };
+    this._remove = function (name) {
+
+        var date = new Date();
+        date.setTime(date.getTime() - 10000);
+        var cookieStr = name + "=" + escape('null') + ";expires=" + date.toGMTString() + ";path=/";
+        document.cookie = cookieStr;
+    }
+};
+
+/*
+ * 写方法 _global.val('value_name','设置这个value');
+ * 读取方法var value=$g('value_name');
+ */
+var _global = new function () {
+    this.val = function (name, value) {
+        if (typeof (Global) == 'function') {
+            var _local_global = new Global(name);
+            if (value != undefined) {
+                _local_global.value = value;
+                Cookie.add(name, value, 1);
+            }
+            return _local_global.value;
+        }
+        else {
+            if (value != undefined) {
+                Cookie.add(name, value, 1);
+                return value;
+            }
+            if (Cookie.get(name) == null) {
+                return "default";
+            }
+            else {
+                return Cookie.get(name);
+            }
+        }
+        return "default";
+    };
+};
+
+var Ajax = {
+    __ajax: this
+    , timeout: {}
+    , _xmlHttp: function () {
+        return new (window.ActiveXObject || window.XMLHttpRequest)("Microsoft.XMLHTTP");
+    }
+    , _AddEventToXHP: function (xhp, fun, isxml) {
+        xhp.onreadystatechange = function () {
+            if (xhp.readyState == 4 && xhp.status == 200)
+                fun(isxml ? xhp.responseXML : xhp.responseText);
+        }
+    }
+    , get: function (url, fun, isxml, bool, wait) {
+        var _xhp = this._xmlHttp();
+        this._AddEventToXHP(_xhp, fun || function () { }, isxml);
+
+        if (typeof wait == "undefined") {
+            _xhp.open("GET", url, bool);
+            //_xhp.withCredentials = true;
+            _xhp.send(null);
+        } else {
+            clearTimeout(this.timeout);
+            this.timeout = setTimeout(function () {
+                _xhp.open("GET", url, bool);
+                //_xhp.withCredentials = true;
+                _xhp.send(null);
+
+            }, wait);
+
+        }
+    },
+    post: function (url, data, fun, isxml, bool, wait) {
+        var _xhp = this._xmlHttp();
+        this._AddEventToXHP(_xhp, fun || function () { }, isxml);
+
+        if (typeof wait == "undefined") {
+            _xhp.open("POST", url, bool);
+            //_xhp.withCredentials = true;
+            _xhp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            _xhp.send(data);
+        } else {
+            clearTimeout(this.timeout);
+            this.timeout = setTimeout(function () {
+                _xhp.open("POST", url, bool);
+                //_xhp.withCredentials = true;
+                _xhp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                _xhp.send(data);
+
+            }, wait);
+
+        }
+
+    }
+};
+
+
+
+var jqAjax = {};
+
+var html_load = function (url, data, func) {
+
+    if (typeof ajax == "object" && typeof ajax.abort == "function") {
+        jqAjax.abort();
+    }
+    var item = url + data;
+
+
+    var options = {
+        dataType: "html",
+        url: url,
+        data: data,
+        success: function (data, textStatus) {
+            if (textStatus == 'success') {
+                //$j('#panel').find("div.level3_panel").html(data);
+                //$j('#panel').find("div.weather_area_content").width($j('#panel').find("div.weather_area_content ul").length * 358);
+                func(data, textStatus);
+
+                //ajax_cache[item] = {
+                //    data: data,
+                //    exptime: (new Date()).getTime() + 60000
+                //};
+
+            }
+            else {
+
+            }
+        },
+        error: function (x, msg, err) {
+            func(html_loading, "");
+        }
+    };
+    jqAjax = $j.ajax(options);
+    // }
+};
+
+function isOperator(value) {
+    var operatorString = "+-*/()";
+    return operatorString.indexOf(value) > -1
+}
+
+function getPrioraty(value) {
+    switch (value) {
+        case '+':
+        case '-':
+            return 1;
+        case '*':
+        case '/':
+            return 2;
+        default:
+            return 0;
+    }
+}
+
+function prioraty(o1, o2) {
+    return getPrioraty(o1) <= getPrioraty(o2);
+}
+
+function dal2Rpn(exp) {
+    var inputStack = [];
+    var outputStack = [];
+    var outputQueue = [];
+
+    for (var i = 0, len = exp.length; i < len; i++) {
+        var cur = exp[i];
+        if (cur != ' ') {
+            inputStack.push(cur);
+        }
+    }
+    console.log('step one');
+    while (inputStack.length > 0) {
+        var cur = inputStack.shift();
+        if (isOperator(cur)) {
+            if (cur == '(') {
+                outputStack.push(cur);
+            } else if (cur == ')') {
+                var po = outputStack.pop();
+                while (po != '(' && outputStack.length > 0) {
+                    outputQueue.push(po);
+                    po = outputStack.pop();
+                }
+                if (po != '(') {
+                    throw "error: unmatched ()";
+                }
+            } else {
+                while (prioraty(cur, outputStack[outputStack.length - 1]) && outputStack.length > 0) {
+                    outputQueue.push(outputStack.pop());
+                }
+                outputStack.push(cur);
+            }
+        } else {
+            outputQueue.push(new Number(cur));
+        }
+    }
+    console.log('step two');
+    if (outputStack.length > 0) {
+        if (outputStack[outputStack.length - 1] == ')' || outputStack[outputStack.length - 1] == '(') {
+            throw "error: unmatched ()";
+        }
+        while (outputStack.length > 0) {
+            outputQueue.push(outputStack.pop());
+        }
+    }
+    console.log('step three');
+    return outputQueue;
+
+}
+
+var evalRpn = function (rpnQueue) {
+    var outputStack = [];
+    while (rpnQueue.length > 0) {
+        var cur = rpnQueue.shift();
+
+        if (!isOperator(cur)) {
+            outputStack.push(cur);
+        } else {
+            if (outputStack.length < 2) {
+                throw "unvalid stack length";
+            }
+            var sec = outputStack.pop();
+            var fir = outputStack.pop();
+
+            outputStack.push(getResult(fir, sec, cur));
+        }
+    }
+
+    if (outputStack.length != 1) {
+        throw "unvalid expression";
+    } else {
+        return outputStack[0];
+    }
+};
+
+//模拟走马灯
+var Jsmarquee = function () {
+    var self = this;
+    self.isrun = true;
+    self.speed = 10;
+    self.t = [];
+    self.Marquee = [];
+    self.marquee_obj = [];
+    self.marquee_obj1 = [];
+    self.marquee_obj2 = [];
+    this.Marquee = function () {
+        var sleft = self.marquee_obj.scrollLeft();
+
+        if (sleft > self.marquee_obj2[0].offsetWidth) {
+            self.marquee_obj.scrollLeft(sleft - self.marquee_obj2[0].offsetWidth);
+        } else {
+            self.marquee_obj.scrollLeft(sleft + self.speed);
+        }
+    };
+
+    this.stop = function () {
+        self.isrun = false;
+        clearTimeout(self.t);
+    };
+
+    this.timer = function () {
+        if (self.isrun) {
+            self.t = setTimeout(function () {
+                self.Marquee();
+                self.timer();
+            }, 100);
+        }
+    };
+
+    this.start = function () {
+        self.marquee_obj2.html("" + self.marquee_obj1.html());
+        self.marquee_obj.scrollLeft(0);
+        self.isrun = true;
+        self.timer();
+    };
+};
+
+var jsmobj = [];
+
+jsmobj = new Jsmarquee();
 
 
 
 
-//=============================//
-//create_menu_DVB code//
-//============================//
+
 var cm = {
     version: "0.7",
     __self: [],
-    nnode: [],//下一个 dom
-    lnode: [], //当前的 dom
+    nnode: [],      //下一个 dom
+    lnode: [],      //当前的 dom
     pointnode: [],
-    attr: [],//当前DOM的attr集合
+    attr: [],       //当前DOM的attr集合
 
     obj: { area_id: "", point_id: "" },
     keyevent: -1,
-    tag: {},
-
-    init: function () {
-        //this.__self = this;
+    tag: {}
+    //Panel框架配置信息
+    , panel: {}
+    , panel_model: {}
+   , init: function () {
+       //this.__self = this;
+   }
+    , $: function (id) {
+        return document.getElementById(id);
     }
-
     , unpoint: function (_master, _point, _selectobj) {
         if (_master && _point) {
             this.setarea({ area_id: _master, point_id: _point });
@@ -338,11 +790,6 @@ var cm = {
         return this;
 
     },
-
-    /*
-    panel="#panel|#panel li|width:200px;height:200px;"
-
-    */
 
     attrib2node: function (obj) {
         var _node = [];
@@ -432,6 +879,8 @@ var cm = {
 
         var _n = this.attrib2node(nlisen);
 
+
+
         //var inclass = nlisen.attr('inclass');
         //var outclass = nlisen.attr('outclass');
         if (typeof _n["inclass"] !== "undefined" && _n["inclass"].length > 0) {
@@ -443,13 +892,6 @@ var cm = {
         }
 
         //var parentstyle = nlisen.attr('parentstyle');
-        //V1:
-        //parentstyle="top:123px;"
-        //V2:
-        //parentstyle="#div1|top:123px;"
-        //parentstyle="#div1|top:123px;[!]#div2|top:300px;"
-        //V3:Add Action up\down\left\right
-        //parentstyle="#div1:up|top:123px;[!]#div1:down|top:123px;[!]#div1:left|top:123px;[!]#div1:right|top:123px;"
         if (typeof _n["parentstyle"] !== "undefined" && _n["parentstyle"].length > 0) {
 
             if (_n["parentstyle"].indexOf('[!]') > -1) {
@@ -460,37 +902,7 @@ var cm = {
 
                     if (muti[i].indexOf('|') > -1) {
                         var ppo = muti[i].split('|');
-                        if (ppo[0].indexOf(":") > -1) {
-                            var _a_p = ppo[0].split(":");
-
-                            switch (this.keyevent) {
-                                case key.Up:
-                                    if (_a_p[1].toLowerCase() == "up") {
-                                        nlisen.parents(_a_p[0]).css(this.style2css(ppo[1]));
-                                    }
-                                    break;
-                                case key.Down:
-                                    if (_a_p[1].toLowerCase() == "down") {
-                                        nlisen.parents(_a_p[0]).css(this.style2css(ppo[1]));
-                                    }
-                                    break;
-                                case key.Left:
-                                    if (_a_p[1].toLowerCase() == "left") {
-                                        nlisen.parents(_a_p[0]).css(this.style2css(ppo[1]));
-                                    }
-                                    break;
-                                case key.Right:
-                                    if (_a_p[1].toLowerCase() == "right") {
-                                        nlisen.parents(_a_p[0]).css(this.style2css(ppo[1]));
-                                    }
-                                    break;
-                            }
-
-
-
-                        } else {
-                            nlisen.parents(ppo[0]).css(this.style2css(ppo[1]));
-                        }
+                        nlisen.parents(ppo[0]).css(this.style2css(ppo[1]));
                     } else {
                         nlisen.parent().css(this.style2css(muti[i]));
                     }
@@ -530,11 +942,28 @@ var cm = {
 
             if (_n["pointstyle"].charAt(0) == "!") {
                 //调用扩展方法
-                f_eval.eval(_n["pointstyle"].removeAT("!"));
+                f(_n["pointstyle"].removeAT("!"));
             } else {
                 this.pointnode.css(this.style2css(_n["pointstyle"]));
             }
         }
+
+
+        //panel
+        //panel="jquery-object|k|len|top"
+        //panel="#area_line1|5|22|top"
+        if (typeof _n["panel"] !== "undefined" && _n["panel"].length > 0) {
+            var _panel = _n["panel"].split('|');
+            if (_panel.length == 4) {
+                this.panel_proc(
+                    _panel[0]
+                    , parseInt(_panel[1], 10)
+                    , parseInt(_panel[2], 10)
+                    , _panel[3]);
+            }
+
+        }
+
 
         return this;
 
@@ -593,8 +1022,6 @@ var cm = {
             return this.proc(prev, this.lnode);
         }
         else {
-
-
             prev = this.lnode.prevAll('[path]:visible:first');
             if (prev.length > 0) {
                 return this.proc(prev, this.lnode);
@@ -663,6 +1090,125 @@ var cm = {
     select_unlock: function (lisen) {
         lisen.attr('select', '');
         return this;
+
+    }
+     , set_panel_model: function (_item) {
+         cm.panel[_item] = cm.panel_model[_item];
+         return this;
+     }
+    //设置初始化位置，p_node为当特殊情况下需要操作其它dom则设定
+ , set_panel_proc: function (_item, k, len, css_obj, p_node) {
+
+     if (k >= cm.panel[_item].size) {
+         cm.panel[_item].point = k - cm.panel[_item].size + 1;
+     }
+
+     var top = (cm.panel[_item].point) * cm.panel[_item].diff;
+     if (typeof p_node == "undefined") {
+         cm.nnode.parents(_item).css(css_obj, top);
+     } else {
+         p_node.css(css_obj, top);
+     }
+
+     return this;
+
+ }
+    , panel_proc_next: function (_val) {
+        var down = 0;
+        cm.panel[_val.item]._val = _val;
+        if (_val.k == 0) {
+            cm.panel[_val.item].point = 0;
+            down = cm.panel[_val.item].base_diff;
+            cm.nnode.parents(_val.item).css(_val.css_obj, down);
+        } else if (_val.k == _val.len - 1 && _val.len > cm.panel[_val.item].size) {
+            cm.panel[_val.item].point = _val.len - cm.panel[_val.item].size;
+            down = (_val.len - cm.panel[_val.item].size) * cm.panel[_val.item].diff;
+            cm.nnode.parents(_val.item).css(_val.css_obj, down);
+        }
+            //else if (k != 0 || (k > cm.panel[item].point && k < (cm.panel[item].size + cm.panel[item].point))) { }
+        else if (_val.k == (cm.panel[_val.item].point + cm.panel[_val.item].size) && _val.len > cm.panel[_val.item].size) {
+            down = (cm.panel[_val.item].point) * cm.panel[_val.item].diff;
+            cm.panel[_val.item].point++;
+            cm.nnode.parents(_val.item).css(_val.css_obj, down);
+        }
+
+    }
+     , panel_proc_prev: function (_val) {
+
+         var top = 0;
+         cm.panel[_val.item]._val = _val;
+         if (_val.k == 0) {
+             cm.panel[_val.item].point = 0;
+             top = cm.panel[_val.item].base_diff;
+             cm.nnode.parents(_val.item).css(_val.css_obj, top);
+         } else if (_val.k == _val.len - 1 && _val.k < _val.len && _val.len > cm.panel[_val.item].size) {
+             cm.panel[_val.item].point = _val.len - cm.panel[_val.item].size;
+             top = (_val.len - cm.panel[_val.item].size) * cm.panel[_val.item].diff;
+             cm.nnode.parents(_val.item).css(_val.css_obj, top);
+         }
+         else if (_val.k == cm.panel[_val.item].point && _val.len > cm.panel[_val.item].size) {
+
+             top = (cm.panel[_val.item].point) * cm.panel[_val.item].diff;
+
+             cm.nnode.parents(_val.item).css(_val.css_obj, top);
+             if (cm.panel[_val.item].point > 0) {
+                 cm.panel[_val.item].point--;
+             }
+         }
+
+     }
+    , panel_proc: function (_item, k, len, css_obj) {
+
+        if (cm.nnode) {
+            var _val = { "item": _item, "k": k, "len": len, "css_obj": css_obj };
+
+            switch (cm.panel[_item].mode) {
+                case "right>left":
+                    if (cm.keyevent == key.Left) {
+                        cm.panel_proc_prev(_val);
+                    } else if (cm.keyevent = key.Right) {
+                        cm.panel_proc_next(_val);
+                    }
+                    break;
+                case "left>right":
+                    if (cm.keyevent == key.Left) {
+                        cm.panel_proc_next(_val);
+                    } else if (cm.keyevent = key.Right) {
+                        cm.panel_proc_prev(_val);
+                    }
+                    break;
+
+                case "down>up":
+                    if (cm.keyevent = key.Down) {
+                        cm.panel_proc_next(_val);
+                    } else if (cm.keyevent == key.Up) {
+                        cm.panel_proc_prev(_val);
+                    }
+                    break;
+
+                case "up>down":
+                default:
+                    if (cm.keyevent == key.Down) {
+                        cm.panel_proc_next(_val);
+                    } else if (cm.keyevent = key.Up) {
+                        cm.panel_proc_prev(_val);
+                    }
+                    break;
+            }
+        }
+
+        //var _debug = cm.nnode;
+        /*
+       $j('#debug').html(
+           "K=" + _val.k
++ "<br> point=" + cm.panel[item].point
++ "<br> size=" + cm.panel[item].size
++ "<br> diff=" + cm.panel[item].diff
++ "<br> mode=" + cm.panel[item].mode
++ "<br> _val.len=" + _val.len
+           ).show();
+           */
+        //{ point: 0, size: 7, diff: -51, base_diff: 0, mode: "up>down" }
 
     }
 };
