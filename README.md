@@ -308,13 +308,14 @@ param=>path 表示触发上右下左的按键的跳转对象
 	panel是实现滑动光标块的效果
 	*代码中初始化：
 	首先定义panel的基础模板，一个页面可定义多个例如：
-
+	```css
 			  cm.panel_model = {
                 "#area_line0":
                  { point: 0, size: 5, diff: 60, base_diff: 0, mode: "left>right" }
 				,"#area_line1":
                  { point: 0, size: 5, diff: 60, base_diff: 0, mode: "left>right" }
             };
+	```
 	其中
 	point		是初始化位置，int 0->n
 	size		是panel范围可显示数据的区域，比如：总数为100，但是每页只显示5条
@@ -339,9 +340,10 @@ param=>path 表示触发上右下左的按键的跳转对象
 		panel="#area_line0|1|8|left"
 
 	完整例子：
+	```html
 		<li panel="#area_line0|0|8|left" inclass="in_select" outclass="un_select" path="':jump{#area_line3,li[path]:first}',':next',':jump{#area_select,#movieWnd}',':prev'">类1</li>
 		<li panel="#area_line0|1|8|left" inclass="in_select" outclass="un_select" path="':jump{#area_line3,li[path]:first}',':next',':jump{#area_select,#movieWnd}',':prev'">类2</li>
-
+	```
 	*已知BUG：
 		因为出现了先生鸡和先生蛋的问题，当默认初始化光标的时候，正巧这个光标有存在panel处理，导致当前对象lnode和下一个对象nnode不能被正常初始化。
 		所以需要在代码中增加一个预处理 
