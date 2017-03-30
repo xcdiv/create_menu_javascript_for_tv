@@ -130,7 +130,11 @@ param=>path 表示触发上右下左的按键的跳转对象
 
 :jump{区域对象,光标对象}
 范例：
+
+```html
 跳转到<div id="area_line3"><ul><li path="............">1<li><li path="............">2<li><li path="............">3<li><li path="............">3<li>
+```
+
 的第一个<li>上
 编写为：
 :jump{#area_line3,li[path]:first}
@@ -183,9 +187,8 @@ param=>path 表示触发上右下左的按键的跳转对象
 <li panel="#area_line0|1|8|left" inclass="in_select" outclass="un_select" path="':jump{#area_line3,li[path]:first}',':next',':jump{#area_select,#movieWnd}',':prev'" pointstyle="display:none;" class="un_select" serviceid="462">老年生活</li>
 ```
 
-========================
-光标指针
-========================
+##光标指针
+
 虽然我们可以标注逻辑位置但是无法直接显示光标有两种方法可以显示光标：
 1、pointstyle或者pointclass，表示一个全屏幕的光标显示的left\top的位置。
     param=>pointclass
@@ -237,7 +240,7 @@ param=>path 表示触发上右下左的按键的跳转对象
         line-height: 45px;
         float: left;
                 }
-```
+	```
 	HTML:
 	```html
 	<li path='#demo ul li:eq(0)','#demo ul li:eq(1)','#demo ul li:eq(0)','#demo ul li:eq(1)' inclass="in_select" outclass="un_select">按钮1</li>
@@ -303,7 +306,7 @@ param=>path 表示触发上右下左的按键的跳转对象
 ##panel滑动区块
 
 	panel是实现滑动光标块的效果
-	代码中初始化：
+	*代码中初始化：
 	首先定义panel的基础模板，一个页面可定义多个例如：
 
 			  cm.panel_model = {
@@ -323,7 +326,7 @@ param=>path 表示触发上右下左的按键的跳转对象
 				down>up			从下向上
 				up>down			从上向下
 	
-	区块触发代码：
+	*区块触发代码：
 	启动对模板#area_line0的启用
 		cm.set_panel_model("#area_line0");
 	如果需要启动多个模板逻辑则
