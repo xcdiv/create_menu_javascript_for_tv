@@ -165,9 +165,10 @@ path 表示触发上右下左的按键的跳转对象
 
 *注意!为了便于开发一些复杂的自动光标
 例如：
+```html
 <ul id="area0"><li path="........">1</li><li path="........">2</li><li path="........">3</li><li path="........">4</li><ul>
 <ul id="area1"><li path="........">1</li><li path="........">2</li><li path="........">3</li><ul>
-
+```
 例如： #area0 li[path]:eq(1) 跳到#area1 li[path]:eq(1)的对应索引会牵扯到众多计算的问题，为了简化操作可以直接写成跳转目的为#area1 li[path]:eq(index)，但这个不是jQuery标准的语法。
 这种方法还可以规避#area0 li[path]:eq(3) 跳到#area1 li[path]:eq(3)但#area1 li[path]:eq(3)并不存在造成的DOM失效问题，如果出现这种情况#area1 li[path]:eq(3)会被自动替换为#area1 li[path]中最后的一个li[path]对象。
 
