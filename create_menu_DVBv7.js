@@ -1,4 +1,4 @@
-﻿var key = {
+var key = {
     Up: 38,
     Down: 40,
     Left: 37,
@@ -793,7 +793,7 @@ var cm = {
 
     attrib2node: function (obj) {
         var _node = [];
-        var attrs = ["path", "href", "keyclick", "outclass", "outstyle", "trigger", "leave_trigger", "inclass", "instyle", "parentstyle", "pointstyle", "panel"];
+        var attrs = ["path", "href", "keyclick", "outclass", "outstyle", "trigger", "leave_trigger", "inclass", "instyle", "objectstyle", "parentstyle", "pointstyle", "panel"];
         if (obj.length > 0) {
             var i = 0;
             for (; i < attrs.length; i++) {
@@ -917,7 +917,27 @@ var cm = {
             }
         }
 
+        //var objectstyle = nlisen.attr('objectstyle');
+        if (typeof _n["objectstyle"] !== "undefined" && _n["objectstyle"].length > 0) {
 
+            if (_n["objectstyle"].indexOf('[!]') > -1) {
+
+                var muti = _n["objectstyle"].split('[!]');
+
+                for (var i = 0; i < muti.length; i++) {
+
+                    if (muti[i].indexOf('|') > -1) {
+                        var ppo = muti[i].split('|');
+                        jQuery(ppo[0]).css(this.style2css(ppo[1]));
+                    }
+                }
+            } else {
+                if (_n["objectstyle"].indexOf('|') > -1) {
+                    var ppo = _n["objectstyle"].split('|');
+                    jQuery(ppo[0]).css(this.style2css(ppo[1]));
+                }
+            }
+        }
         //触发器
         // var trigger = nlisen.attr('trigger');
         if (typeof _n["trigger"] !== "undefined") {
