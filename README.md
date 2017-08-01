@@ -125,7 +125,7 @@ CM（create_menu_DVB）主要实现在HTML增加特殊attrion项目实现键盘�
 
 path 表示触发上右下左的按键的跳转对象
            
-''为对象，可支持多个':jump{#area_line3,li[path]:first}',':next',':jump{#area_select,#movieWnd}',':prev'，但对象必须保持全局唯一（区域唯一）
+''为对象，可支持多个':jump{#area_line3,li[path]:first}',':next',':jump{#area_select,#movieWnd}',':prev'但对象必须保持全局唯一（区域唯一）
 *完全兼容jquery 1.3以上版本的select DOM的方法
 *但请注意'','','',''的格式，为了提高效率我们的间隔符号不能写成，例如： ':next'   ,    ':prev'， ':next'   ,    ':prev'这种格式，在这里错误有两个，一、','中间不能出现空格或者其它字符；二、必须用ASCII的符号，不要出现中文输入法的全角。
 
@@ -202,8 +202,10 @@ path 表示触发上右下左的按键的跳转对象
 ```html
 <div id="demo">
 	<ul>
-	<li path='#demo ul li:eq(0)','#demo ul li:eq(1)','#demo ul li:eq(0)','#demo ul li:eq(1)'>按钮1</li>
-	<li path='#demo ul li:eq(0)','#demo ul li:eq(1)','#demo ul li:eq(0)','#demo ul li:eq(1)'>按钮2</li>
+  <lipath="':jump{#panel,#UI1 li[path]:eq(index)}',':next',':jump{#panel,#UI1 li[path]:eq(index)}',':prev'">
+ 按钮1</li>
+            <lipath="':jump{#panel,#UI1 li[path]:eq(index)}',':next',':jump{#panel,#UI1 li[path]:eq(index)}',':prev'">
+ 按钮2</li>
 	</ul>
 </div>
 
@@ -402,7 +404,19 @@ style定义：
 	<li panel="#area_line0|1|8|left" inclass="in_select" outclass="un_select" path="':jump{#area_line3,li[path]:first}',':next',':jump{#area_select,#movieWnd}',':prev'">类2</li>
 ```
 	
+	*panel的位置初始化
 
+		//第一个默认DOM光标位置的初始化
+		cm.setpoint("#area_select", "#point", '#area_line2 li[path]:visible:eq(3)');
+	    //光标默认初始化，自动计算光标的位置
+        var o = $j('#area_line2 li[path]:visible:eq(3)');
+        if (o.length > 0) {
+            cm.set_panel_proc("#area_line2"
+                    , o.prevAll().length
+                    , o.parent().find("li[path]").length
+                    , "top"
+                    , o.parent());
+        }
 
 	*已知BUG：
 		因为出现了先生鸡和先生蛋的问题，当默认初始化光标的时候，正巧这个光标有存在panel处理，导致当前对象lnode和下一个对象nnode不能被正常初始化。
