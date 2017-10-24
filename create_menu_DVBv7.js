@@ -1,4 +1,4 @@
-﻿var key = {
+var key = {
     Up: 38,
     Down: 40,
     Left: 37,
@@ -76,13 +76,11 @@ var Event = function (_event) {
 
     var keycode = [];
 
-    //if (_event.which) {
-    keycode = _event.which;
-
-    //} else {
-
-    //    keycode = event.keyCode;
-    //}
+    if (_event.which) {
+        keycode = _event.which; 
+    } else { 
+        keycode = _event.keyCode;
+    }
     var code = 0;
 
     switch (keycode) {
@@ -260,93 +258,6 @@ String.prototype.trim = function () {
     return this.replace(/(^\s*)|(\s*$j)/g, "");
 };
 
-String.prototype.TrueLength = function () {
-    var str = this;
-    var length = str.length;
-    var realLength = 0
-    var temLength = 0;
-    for (var i = 0; i < length; i++) {
-        charCode = str.charCodeAt(i);
-        if (charCode >= 0 && charCode <= 128) {
-            temLength += 1;
-        } else {
-            realLength += 1;
-        }
-        if (temLength == 2) {
-            realLength += 1;
-            temLength = 0;
-        }
-    }
-    return realLength;
-};
-
-//week_day[d.getDay()]
-//var week_day = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
-
-String.prototype.toDate = function () {
-    var _d = this.split('-');
-    return new Date(parseInt(_d[0], 10)
-                , parseInt(_d[1], 10) - 1
-                , parseInt(_d[2], 10));
-};
-String.prototype.toDateTime = function () {
-
-    return new Date(Date.parse(this.replace(/-/g, "/")));
-};
-
-
-//var time1 = new Date().format("yyyy-MM-dd hh:mm:ss");     
-Date.prototype.format = function (fmt) { //author: meizz   
-    var o = {
-        "M+": this.getMonth() + 1,                 //月份   
-        "d+": this.getDate(),                    //日   
-        "h+": this.getHours(),                   //小时   
-        "m+": this.getMinutes(),                 //分   
-        "s+": this.getSeconds(),                 //秒   
-        "q+": Math.floor((this.getMonth() + 3) / 3), //季度   
-        "S": this.getMilliseconds()             //毫秒   
-    };
-    if (/(y+)/.test(fmt))
-        fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-    for (var k in o)
-        if (new RegExp("(" + k + ")").test(fmt))
-            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-    return fmt;
-};
-Date.prototype.AddDays = function (_add) { //author: meizz   
-    var t = new Date();//你已知的时间
-    var t_s = t.getTime();//转化为时间戳毫秒数
-    var nt = new Date();//定义一个新时间 
-    nt.setTime(t_s + 1000 * 60 * 60 * 24 * _add);//设置新时间比旧时间多一小时 
-
-    return nt;
-};
-Date.prototype.AddHours = function (_add) { //author: meizz   
-    var t = new Date();//你已知的时间
-    var t_s = t.getTime();//转化为时间戳毫秒数
-    var nt = new Date();//定义一个新时间 
-    nt.setTime(t_s + 1000 * 60 * 60 * _add);//设置新时间比旧时间多一小时 
-
-    return nt;
-};
-
-Date.prototype.UTCToLocalTimeString = function () {
-
-    //'yyyy/MM/dd hh:mm:ss'
-    // var d = this;
-    var timeOffsetInHours = -(this.getTimezoneOffset() / 60) + -8;
-    this.setHours(this.getHours() + timeOffsetInHours);
-    return this.format('yyyy/MM/dd hh:mm:ss');
-};
-Date.prototype.UTCToLocalTime = function () {
-
-    //'yyyy/MM/dd hh:mm:ss'
-    // var d = this;
-    var timeOffsetInHours = -(this.getTimezoneOffset() / 60) + -8;
-    this.setHours(this.getHours() + timeOffsetInHours);
-    return this;
-};
-
 String.prototype.removeAT = function (b) {
     var a = this;
     while (a.indexOf(b) != -1) {
@@ -363,16 +274,19 @@ String.prototype.format = function () {
             return args[i];
         });
 };
-String.prototype.UnicodeLength = function () {
-    var txt = this;
-    txt = txt.replace(/[\u00FF-\uFFFF]/g, "**");
-    return txt.length;
-};
 
+//if (!Array.prototype.contains) {
 
-
-
-
+//    Array.prototype.contains = function (obj) {
+//        var i = this.length;
+//        while (i--) {
+//            if (this[i] === obj) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
+//}
 var rand = {};
 rand.get = function (begin, end) {
     return Math.floor(Math.random() * (end - begin)) + begin;
@@ -486,6 +400,9 @@ var Cookie = new function () {
                 this._remove(name[i]);
             }
         }
+
+
+
     };
     this._remove = function (name) {
 
@@ -575,7 +492,9 @@ var Ajax = {
                 _xhp.send(data);
 
             }, wait);
+
         }
+
     }
 };
 
@@ -589,6 +508,7 @@ var html_load = function (url, data, func) {
         jqAjax.abort();
     }
     var item = url + data;
+
 
     var options = {
         dataType: "html",
@@ -618,7 +538,102 @@ var html_load = function (url, data, func) {
     // }
 };
 
+function isOperator(value) {
+    var operatorString = "+-*/()";
+    return operatorString.indexOf(value) > -1
+}
 
+function getPrioraty(value) {
+    switch (value) {
+        case '+':
+        case '-':
+            return 1;
+        case '*':
+        case '/':
+            return 2;
+        default:
+            return 0;
+    }
+}
+
+function prioraty(o1, o2) {
+    return getPrioraty(o1) <= getPrioraty(o2);
+}
+
+function dal2Rpn(exp) {
+    var inputStack = [];
+    var outputStack = [];
+    var outputQueue = [];
+
+    for (var i = 0, len = exp.length; i < len; i++) {
+        var cur = exp[i];
+        if (cur != ' ') {
+            inputStack.push(cur);
+        }
+    }
+    console.log('step one');
+    while (inputStack.length > 0) {
+        var cur = inputStack.shift();
+        if (isOperator(cur)) {
+            if (cur == '(') {
+                outputStack.push(cur);
+            } else if (cur == ')') {
+                var po = outputStack.pop();
+                while (po != '(' && outputStack.length > 0) {
+                    outputQueue.push(po);
+                    po = outputStack.pop();
+                }
+                if (po != '(') {
+                    throw "error: unmatched ()";
+                }
+            } else {
+                while (prioraty(cur, outputStack[outputStack.length - 1]) && outputStack.length > 0) {
+                    outputQueue.push(outputStack.pop());
+                }
+                outputStack.push(cur);
+            }
+        } else {
+            outputQueue.push(new Number(cur));
+        }
+    }
+    console.log('step two');
+    if (outputStack.length > 0) {
+        if (outputStack[outputStack.length - 1] == ')' || outputStack[outputStack.length - 1] == '(') {
+            throw "error: unmatched ()";
+        }
+        while (outputStack.length > 0) {
+            outputQueue.push(outputStack.pop());
+        }
+    }
+    console.log('step three');
+    return outputQueue;
+
+}
+
+var evalRpn = function (rpnQueue) {
+    var outputStack = [];
+    while (rpnQueue.length > 0) {
+        var cur = rpnQueue.shift();
+
+        if (!isOperator(cur)) {
+            outputStack.push(cur);
+        } else {
+            if (outputStack.length < 2) {
+                throw "unvalid stack length";
+            }
+            var sec = outputStack.pop();
+            var fir = outputStack.pop();
+
+            outputStack.push(getResult(fir, sec, cur));
+        }
+    }
+
+    if (outputStack.length != 1) {
+        throw "unvalid expression";
+    } else {
+        return outputStack[0];
+    }
+};
 
 //模拟走马灯
 var Jsmarquee = function () {
@@ -667,8 +682,11 @@ var jsmobj = [];
 jsmobj = new Jsmarquee();
 
 
+
+
+
 var cm = {
-    version: "0.7.4",
+    version: "0.7",
     __self: [],
     nnode: [],      //下一个 dom
     lnode: [],      //当前的 dom
@@ -743,19 +761,14 @@ var cm = {
 
         switch (key_event) {
             case key.Ok:
-
-                if (typeof this.attr["keyclick"] !== "undefined" && this.attr["keyclick"].length > 0) {
+                if (typeof this.attr["keyclick"] !== "undefined") {
                     f_eval.eval(this.attr["keyclick"].removeAT("!"));
                     //eval(this.lnode["keyclick"]);
                 }
-                else if (typeof this.attr["href"] != "undefined" && this.attr["href"].indexOf('!') == -1) {
+                else if (typeof this.attr["href"] != "undefined") {
                     window.location.href = this.attr["href"];
                 }
-                else if (typeof this.attr["href"] != "undefined" && this.attr["href"].indexOf('!') > -1) {
-                    f_eval.eval(this.attr["href"].removeAT("!"));
-                }
                 return false;
-
                 break;
             case key.Down:
                 this.proc(path[2], this.lnode);
@@ -814,15 +827,15 @@ var cm = {
             if (typeof next_lisen == "string" && next_lisen == '') {
 
             } else if (typeof next_lisen == "string" && next_lisen.charAt(0) == ":") {
-                if (next_lisen == ":next" || next_lisen == "::N") {
+                if (next_lisen == ":next") {
                     this.next();
                     return this;
                 }
-                else if (next_lisen == ":prev" || next_lisen == "::P") {
+                else if (next_lisen == ":prev") {
                     this.prev();
                     return this;
                 }
-                else if (next_lisen.indexOf(":jump") > -1 || next_lisen.indexOf("::J") > -1) {
+                else if (next_lisen.indexOf(":jump") > -1) {
                     this.jump_s(next_lisen, lisen);
                 }
             }
@@ -903,6 +916,7 @@ var cm = {
                 }
             }
         }
+
         //var objectstyle = nlisen.attr('objectstyle');
         if (typeof _n["objectstyle"] !== "undefined" && _n["objectstyle"].length > 0) {
 
@@ -914,17 +928,16 @@ var cm = {
 
                     if (muti[i].indexOf('|') > -1) {
                         var ppo = muti[i].split('|');
-                        $j(ppo[0]).css(this.style2css(ppo[1]));
+                        jQuery(ppo[0]).css(this.style2css(ppo[1]));
                     }
                 }
             } else {
                 if (_n["objectstyle"].indexOf('|') > -1) {
                     var ppo = _n["objectstyle"].split('|');
-                    $j(ppo[0]).css(this.style2css(ppo[1]));
+                    jQuery(ppo[0]).css(this.style2css(ppo[1]));
                 }
             }
         }
-
         //触发器
         // var trigger = nlisen.attr('trigger');
         if (typeof _n["trigger"] !== "undefined") {

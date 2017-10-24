@@ -1,5 +1,5 @@
-﻿
-###DOM 扩展框架 create_menu_DVB for TV version 0.7.4
+
+###DOM 扩展框架 create_menu_DVB for TV version 0.7
 
 ##Project Objectives:
 Encapsulates the keyboard's top, bottom, and right sides and confirms the corresponding logic with the HTML DOM, simplifying the handling of events for each DOM object by encapsulating the DOM's attributes
@@ -133,7 +133,6 @@ path 表示触发上右下左的按键的跳转对象
 
 #跳转方法
 :jump{区域对象,光标对象}
-0.7.2版本开始推出简写法   ::J
 范例：
 
 ```html
@@ -179,9 +178,9 @@ path 表示触发上右下左的按键的跳转对象
 
 ```css
  
-    :prev 0.7.2版本开始推出简写法   ::P
+    :prev
         同父级的上一个[path]对象（必须是可显示的）
-    :next 0.7.2版本开始推出简写法   ::N
+    :next
         同父级的下一个[path]对象（必须是可显示的）
                    
 	@http://127.0.0.1/2.html 跳转到谋网页
@@ -347,7 +346,6 @@ style定义：
 
 		同时改变DOM对象样式
 		parentstyle="父级DOM的selector|样式[!]父级DOM的selector|样式[!]..............."
-		*效率略比parentstyle方案慢一点，好处是可以并发执行多个DOM对象的时候效率提升较大
 
 ```html
 <ul id="abcd">
