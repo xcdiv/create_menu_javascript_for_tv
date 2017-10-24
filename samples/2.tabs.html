@@ -1,0 +1,156 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script src="../jquery-1.4.4.min.js"></script>
+    <script src="../create_menu_DVBv7.js"></script>
+    <title></title>
+    <style>
+        .area_select {
+            margin: 50px;
+            background: #0094ff;
+            width: auto;
+            height: 800px;
+        }
+
+            .area_select ul {
+                width: 800px;
+                height: 200px;
+            }
+
+                .area_select ul.tab_head li {
+                    width: 50px;
+                    height: 20px;
+                    background: #5faee6;
+                    list-style: none;
+                    float: left;
+                    margin: 10px;
+                }
+   .area_select ul li {
+                    width: 150px;
+                    height: 150px;
+                    background: #5faee6;
+                    list-style: none;
+                    float: left;
+                    margin: 10px;
+                    line-height:150px;
+                    text-align:center;
+                }
+                    .area_select ul li.in_select {
+                        border: 5px solid #f00;
+                    }
+    </style>
+
+    <script>
+
+        var f_eval = {
+            helloworld: function () {
+                alert("Hello Word!");
+            }
+            , eval: function (property, parameter) {
+
+
+                var func = property;
+                if (typeof parameter == "undefined" && property.indexOf('(') > -1) {
+
+                    parameter = property.match(/\(([^)]*)\)/gi);
+                    parameter = (parameter + "").replace(/\(/gi, '').replace(/\)/gi, '');
+
+                    property = property.replace(/\(\)/gi, '');
+                    property = property.replace(/\(.*?\)/gi, '');
+                }
+
+
+                var fn = this[property];
+
+                if (typeof fn === 'function') {
+                    fn(parameter);
+                } else {
+                    //alert('eval');
+
+                    switch (property) {
+                        case "":
+                            break;
+                        default:
+                            eval(func);
+                            break;
+                    }
+                }
+            }
+        };
+
+
+        //页面第一次加载的时候处理
+        $j(document).ready(function () {
+            document.onkeydown = function (event) {
+
+                //bind system key event
+                var code = Event(event);
+
+                //无第三方事件，同时在某个区域的时候处理事件。
+                if (cm.obj.area_id == "#area_select") {
+                    //键盘拦截
+                    switch (code) {
+                        case key.PageUp:
+                        case key.PageDown:
+
+                            return false;
+                            break;
+                        case key.Back:
+
+                            return false;
+                            break;
+                        default:
+                            //把其余键盘释放给#area_select区的create_menu事件
+                            cm.event(code, { area_id: "#area_select", point_id: "#point" });
+                            break;
+                    }
+                }
+            }
+
+
+            //first lock point 
+            cm.setpoint("#area_select", "#point", '#area_line0 li[path]:first');
+
+        });
+
+    </script>
+</head>
+<body>
+    <div>Base Create Menu Samples #2 Tab</div>
+    <!--    <div><a href="base.html">set point 0</a>   <a href="base.html?index=1">set point 1</a></div>-->
+    <div id="area_select" class="area_select">
+        <ul id="area_line0" class="tab_head">
+            <li name="tab1" inclass="in_select" outclass="un_select" path="'',':next',':jump{#area_select,ul.tab_content[name=tab1] li:first}',':prev'" objectstyle="#area_select ul.tab_content[name=tab1]|display:block;[!]#area_select ul.tab_content[name!=tab1]|display:none;">TAB 1</li>
+            <li name="tab2" inclass="in_select" outclass="un_select" path="'',':next',':jump{#area_select,ul.tab_content[name=tab2] li:first}',':prev'" objectstyle="#area_select ul.tab_content[name=tab2]|display:block;[!]#area_select ul.tab_content[name!=tab2]|display:none;">TAB 2</li>
+            <li name="tab3" inclass="in_select" outclass="un_select" path="'',':next',':jump{#area_select,ul.tab_content[name=tab3] li:first}',':prev'" objectstyle="#area_select ul.tab_content[name=tab3]|display:block;[!]#area_select ul.tab_content[name!=tab3]|display:none;">TAB 3</li>
+            <li name="tab4" inclass="in_select" outclass="un_select" path="'',':next',':jump{#area_select,ul.tab_content[name=tab4] li:first}',':prev'" objectstyle="#area_select ul.tab_content[name=tab4]|display:block;[!]#area_select ul.tab_content[name!=tab4]|display:none;">TAB 4</li>
+        </ul>
+        <ul name="tab1" style="display: none; background: #ff6a00;" class="tab_content">
+            <li inclass="in_select" outclass="un_select" path="':jump{#area_select,#area_line0 li[name=tab1]}',':next','',':prev'" href="!helloworld()">B1</li>
+            <li inclass="in_select" outclass="un_select" path="':jump{#area_select,#area_line0 li[name=tab1]}',':next','',':prev'" href="!helloworld()">B2</li>
+            <li inclass="in_select" outclass="un_select" path="':jump{#area_select,#area_line0 li[name=tab1]}',':next','',':prev'" href="!helloworld()">B3</li>
+            <li inclass="in_select" outclass="un_select" path="':jump{#area_select,#area_line0 li[name=tab1]}',':next','',':prev'" href="!helloworld()">B4</li>
+        </ul>
+        <ul name="tab2" style="display: none; background: #b6ff00;" class="tab_content">
+            <li inclass="in_select" outclass="un_select" path="':jump{#area_select,#area_line0 li[name=tab2]}',':next','',':prev'">B1</li>
+            <li inclass="in_select" outclass="un_select" path="':jump{#area_select,#area_line0 li[name=tab2]}',':next','',':prev'">B2</li>
+            <li inclass="in_select" outclass="un_select" path="':jump{#area_select,#area_line0 li[name=tab2]}',':next','',':prev'">B3</li>
+            <li inclass="in_select" outclass="un_select" path="':jump{#area_select,#area_line0 li[name=tab2]}',':next','',':prev'">B4</li>
+        </ul>
+        <ul name="tab3" style="display: none; background: #ffd800;" class="tab_content">
+            <li inclass="in_select" outclass="un_select" path="':jump{#area_select,#area_line0 li[name=tab3]}',':next','',':prev'">B1</li>
+            <li inclass="in_select" outclass="un_select" path="':jump{#area_select,#area_line0 li[name=tab3]}',':next','',':prev'">B2</li>
+            <li inclass="in_select" outclass="un_select" path="':jump{#area_select,#area_line0 li[name=tab3]}',':next','',':prev'">B3</li>
+            <li inclass="in_select" outclass="un_select" path="':jump{#area_select,#area_line0 li[name=tab3]}',':next','',':prev'">B4</li>
+        </ul>
+        <ul name="tab4" style="display: none; background: #5faee6;" class="tab_content">
+            <li inclass="in_select" outclass="un_select" path="':jump{#area_select,#area_line0 li[name=tab4]}',':next','',':prev'">B1</li>
+            <li inclass="in_select" outclass="un_select" path="':jump{#area_select,#area_line0 li[name=tab4]}',':next','',':prev'">B2</li>
+            <li inclass="in_select" outclass="un_select" path="':jump{#area_select,#area_line0 li[name=tab4]}',':next','',':prev'">B3</li>
+            <li inclass="in_select" outclass="un_select" path="':jump{#area_select,#area_line0 li[name=tab4]}',':next','',':prev'">B4</li>
+        </ul>
+    </div>
+
+</body>
+</html>

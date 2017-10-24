@@ -1,0 +1,152 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script src="../jquery-1.4.4.min.js"></script>
+    <script src="../create_menu_DVBv7.js"></script>
+    <title></title>
+    <style>
+        .area_select {
+            margin: 50px;
+            background: #0094ff;
+            width: auto;
+            height: 800px;
+        }
+
+            .area_select ul {
+                width: 800px;
+                height: 200px;
+            }
+
+                .area_select ul li {
+                    width: 150px;
+                    height: 150px;
+                    background: #5faee6;
+                    list-style: none;
+                    float: left;
+                    margin: 10px;
+                    line-height: 150px;
+                    text-align: center;
+                }
+
+                    .area_select ul li.in_select {
+                        border: 5px solid #ff6a00;
+                    }
+    </style>
+
+    <script>
+
+        var f_eval = {
+            helloworld: function (info) {
+
+                var param = info.split(',');
+
+                alert("Hello Word!" + param[0] + " " + param[1]);
+            }
+            , trigger_text: function (info) {
+                var param = info.split(',');
+                //cm.nnode 是当前对象 
+                alert(cm.nnode.text() + param[0] + " " + param[1]);
+            }
+               , trigger_proc: function () {
+
+                   //cm.nnode 是当前对象 
+                   cm.nnode.css({ "background": "#00f", "color": "#fff" });
+               }
+            , leave_trigger_proc: function () {
+
+                cm.nnode.css({ "background": "#5faee6", "color": "#000" });
+            }
+            //部分机顶盒无法实现完美的数组参数传递,所以如果采用f_eval的话参数只能有一个,如果是多参数需要用split切分
+            , eval: function (property, parameter) {
+
+
+                var func = property;
+                if (typeof parameter == "undefined" && property.indexOf('(') > -1) {
+
+                    parameter = property.match(/\(([^)]*)\)/gi);
+                    parameter = (parameter + "").replace(/\(/gi, '').replace(/\)/gi, '');
+
+                    property = property.replace(/\(\)/gi, '');
+                    property = property.replace(/\(.*?\)/gi, '');
+                }
+
+
+                var fn = this[property];
+
+                if (typeof fn === 'function') {
+                    fn(parameter);
+                } else {
+                    //alert('eval');
+
+                    switch (property) {
+                        case "":
+                            break;
+                        default:
+                            eval(func);
+                            break;
+                    }
+                }
+            }
+        };
+
+
+        //页面第一次加载的时候处理
+        $j(document).ready(function () {
+            document.onkeydown = function (event) {
+
+                //bind system key event
+                var code = Event(event);
+
+                //无第三方事件，同时在某个区域的时候处理事件。
+                if (cm.obj.area_id == "#area_select") {
+                    //键盘拦截
+                    switch (code) {
+                        case key.PageUp:
+                        case key.PageDown:
+
+                            return false;
+                            break;
+                        case key.Back:
+
+                            return false;
+                            break;
+                        default:
+                            //把其余键盘释放给#area_select区的create_menu事件
+                            cm.event(code, { area_id: "#area_select", point_id: "#point" });
+                            break;
+                    }
+                }
+            }
+
+
+            //first lock point
+            if (request.QueryString("index") == null) {
+                cm.setpoint("#area_select", "#point", '#area_line1 li[path]:first');
+            } else {
+                cm.setpoint("#area_select", "#point", '#area_line1 li[path]:eq(' + request.QueryString("index") + ')');
+            }
+        });
+
+    </script>
+</head>
+<body>
+    <div>Base Create Menu Samples #3 trigger</div>
+
+    <div id="area_select" class="area_select">
+        <ul id="area_line0">
+            <li inclass="in_select" outclass="un_select" path="':jump{#area_select,#area_line1 li[path]:eq(index)}',':next',':jump{#area_select,#area_line1 li[path]:eq(index)}',':prev'" trigger="!trigger_text(AAA,AAAA)" href="!helloworld()">Hello World!</li>
+            <li inclass="in_select" outclass="un_select" path="':jump{#area_select,#area_line1 li[path]:eq(index)}',':next',':jump{#area_select,#area_line1 li[path]:eq(index)}',':prev'" trigger="!trigger_text(AAA,AAAA)" keyclick="!helloworld()">B</li>
+            <li inclass="in_select" outclass="un_select" path="':jump{#area_select,#area_line1 li[path]:eq(index)}',':next',':jump{#area_select,#area_line1 li[path]:eq(index)}',':prev'" trigger="!trigger_text(AAA,AAAA)" href="http://www.google.com">C</li>
+            <li inclass="in_select" outclass="un_select" path="':jump{#area_select,#area_line1 li[path]:eq(index)}',':next',':jump{#area_select,#area_line1 li[path]:eq(index)}',':prev'" trigger="!trigger_text(AAA,AAAA)">D</li>
+        </ul>
+        <ul id="area_line1">
+            <li inclass="in_select" outclass="un_select" path="':jump{#area_select,#area_line0 li[path]:eq(index)}',':next',':jump{#area_select,#area_line0 li[path]:eq(index)}',':prev'" trigger="!trigger_proc()" leave_trigger="!leave_trigger_proc()">A</li>
+            <li inclass="in_select" outclass="un_select" path="':jump{#area_select,#area_line0 li[path]:eq(index)}',':next',':jump{#area_select,#area_line0 li[path]:eq(index)}',':prev'" trigger="!trigger_proc()" leave_trigger="!leave_trigger_proc()">B</li>
+            <li inclass="in_select" outclass="un_select" path="':jump{#area_select,#area_line0 li[path]:eq(index)}',':next',':jump{#area_select,#area_line0 li[path]:eq(index)}',':prev'" trigger="!trigger_proc()" leave_trigger="!leave_trigger_proc()">C</li>
+            <li inclass="in_select" outclass="un_select" path="':jump{#area_select,#area_line0 li[path]:eq(index)}',':next',':jump{#area_select,#area_line0 li[path]:eq(index)}',':prev'" trigger="!trigger_proc()" leave_trigger="!leave_trigger_proc()">D</li>
+        </ul>
+    </div>
+
+</body>
+</html>
