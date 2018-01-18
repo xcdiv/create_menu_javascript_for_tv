@@ -1,5 +1,5 @@
 ﻿
-###DOM 扩展框架 create_menu_DVB for TV version 0.7.4
+###DOM 扩展框架 create_menu_DVB for TV version 0.7.6
 
 ##Project Objectives:
 Encapsulates the keyboard's top, bottom, and right sides and confirms the corresponding logic with the HTML DOM, simplifying the handling of events for each DOM object by encapsulating the DOM's attributes
@@ -361,7 +361,7 @@ style定义：
 ```html
 <li ............  href="http://www.baidu.com">1</li>
 ```
-##panel滑动区块
+##panel滑动区块 0.7.6更改
 
 	panel是实现滑动光标块的效果
 	*代码中初始化：
@@ -394,16 +394,19 @@ style定义：
 	再DOM中的封装增加panel的行配置：
 		panel="模板名称|当前的index|总数量|样式对象名"
 
-		"当前的index"从0计算，"总数量"而为总数的长度，"总数量"应该比"当前的index"中最大的一个+1。
+		"当前的index"从1计算，"总数量"而为总数的长度，"总数量"="index"中最大值。
 
 		*样式对象名如：left或 margin-left
 	例如：
 		panel="#area_line0|1|8|left"
+		panel="#area_line0|2|8|left"
+		panel="#area_line0|3|8|left"
+		panel="#area_line0|4|8|left"
 
 	完整例子：
 ```html
-	<li panel="#area_line0|0|8|left" inclass="in_select" outclass="un_select" path="':jump{#area_line3,li[path]:first}',':next',':jump{#area_select,#movieWnd}',':prev'">类1</li>
-	<li panel="#area_line0|1|8|left" inclass="in_select" outclass="un_select" path="':jump{#area_line3,li[path]:first}',':next',':jump{#area_select,#movieWnd}',':prev'">类2</li>
+	<li panel="#area_line0|1|8|left" inclass="in_select" outclass="un_select" path="':jump{#area_line3,li[path]:first}',':next',':jump{#area_select,#movieWnd}',':prev'">类1</li>
+	<li panel="#area_line0|2|8|left" inclass="in_select" outclass="un_select" path="':jump{#area_line3,li[path]:first}',':next',':jump{#area_select,#movieWnd}',':prev'">类2</li>
 ```
 	
 	*panel的位置初始化

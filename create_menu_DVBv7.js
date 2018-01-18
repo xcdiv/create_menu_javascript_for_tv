@@ -668,7 +668,7 @@ jsmobj = new Jsmarquee();
 
 
 var cm = {
-    version: "0.7.4",
+    version: "0.7.6",
     __self: [],
     nnode: [],      //下一个 dom
     lnode: [],      //当前的 dom
@@ -1123,11 +1123,12 @@ var cm = {
     , panel_proc_next: function (_val) {
         var down = 0;
         cm.panel[_val.item]._val = _val;
-        if (_val.k == 0) {
+
+        if (_val.k == 1) {
             cm.panel[_val.item].point = 0;
             down = cm.panel[_val.item].base_diff;
             cm.nnode.parents(_val.item).css(_val.css_obj, down);
-        } else if (_val.k == _val.len - 1 && _val.len > cm.panel[_val.item].size) {
+        } else if (_val.k == _val.len && _val.len > cm.panel[_val.item].size) {
             cm.panel[_val.item].point = _val.len - cm.panel[_val.item].size;
             down = (_val.len - cm.panel[_val.item].size) * cm.panel[_val.item].diff;
             cm.nnode.parents(_val.item).css(_val.css_obj, down);
@@ -1144,18 +1145,25 @@ var cm = {
 
          var top = 0;
          cm.panel[_val.item]._val = _val;
-         if (_val.k == 0) {
+         if (_val.k == 1) {
              cm.panel[_val.item].point = 0;
              top = cm.panel[_val.item].base_diff;
              cm.nnode.parents(_val.item).css(_val.css_obj, top);
-         } else if (_val.k == _val.len - 1 && _val.k < _val.len && _val.len > cm.panel[_val.item].size) {
+         }
+         else if (_val.k == _val.len) {
+
+             cm.panel[_val.item].point = (_val.len - cm.panel[_val.item].size);
+             top = cm.panel[_val.item].point * cm.panel[_val.item].diff;;
+             cm.nnode.parents(_val.item).css(_val.css_obj, top);
+         }
+         else if (_val.k == _val.len && _val.k < _val.len && _val.len > cm.panel[_val.item].size) {
              cm.panel[_val.item].point = _val.len - cm.panel[_val.item].size;
              top = (_val.len - cm.panel[_val.item].size) * cm.panel[_val.item].diff;
              cm.nnode.parents(_val.item).css(_val.css_obj, top);
          }
          else if (_val.k == cm.panel[_val.item].point && _val.len > cm.panel[_val.item].size) {
 
-             top = (cm.panel[_val.item].point) * cm.panel[_val.item].diff;
+             top = (cm.panel[_val.item].point - 1) * cm.panel[_val.item].diff;
 
              cm.nnode.parents(_val.item).css(_val.css_obj, top);
              if (cm.panel[_val.item].point > 0) {
@@ -1204,20 +1212,21 @@ var cm = {
             }
         }
 
-        //var _debug = cm.nnode;
-        /*
-       $j('#debug').html(
-           "K=" + _val.k
-+ "<br> point=" + cm.panel[item].point
-+ "<br> size=" + cm.panel[item].size
-+ "<br> diff=" + cm.panel[item].diff
-+ "<br> mode=" + cm.panel[item].mode
-+ "<br> _val.len=" + _val.len
-           ).show();
-           */
+        //    var _debug = cm.nnode;
+        //
+        //  $j('#debug').html(
+        //       "K=" + _val.k
+        //       + "<br> point=" + cm.panel[_item].point
+        //       + "<br> size=" +  cm.panel[_item].size
+        //       + "<br> diff=" +  cm.panel[_item].diff
+        //       + "<br> mode=" +  cm.panel[_item].mode
+        //       + "<br> _val.len=" + _val.len
+        //      ).show();
+
         //{ point: 0, size: 7, diff: -51, base_diff: 0, mode: "up>down" }
 
     }
 };
+
 
 cm.init();
