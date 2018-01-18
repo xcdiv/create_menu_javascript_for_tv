@@ -668,7 +668,7 @@ jsmobj = new Jsmarquee();
 
 
 var cm = {
-    version: "0.7.6",
+    version: "0.7.6.1",
     __self: [],
     nnode: [],      //下一个 dom
     lnode: [],      //当前的 dom
@@ -1176,7 +1176,7 @@ var cm = {
 
         if (cm.nnode) {
             var _val = { "item": _item, "k": k, "len": len, "css_obj": css_obj };
-
+            cm.panel[_val.item].k = k;
             switch (cm.panel[_item].mode) {
                 case "right>left":
                     if (cm.keyevent == key.Left) {
@@ -1227,6 +1227,7 @@ var cm = {
 
     }
 };
+
 
 
 cm.init();

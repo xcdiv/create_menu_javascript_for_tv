@@ -1,5 +1,5 @@
 ﻿
-###DOM 扩展框架 create_menu_DVB for TV version 0.7.6
+###DOM 扩展框架 create_menu_DVB for TV version 0.7.6.1
 
 ##Project Objectives:
 Encapsulates the keyboard's top, bottom, and right sides and confirms the corresponding logic with the HTML DOM, simplifying the handling of events for each DOM object by encapsulating the DOM's attributes
@@ -12,6 +12,7 @@ Encapsulates the keyboard's top, bottom, and right sides and confirms the corres
 ##修正日志
 2018-01-18
 cm.panel()方法发现一个BUG,主要原因是构架设计的时候是从i=0开始计算的，导致在++--的逻辑处理上容易出现指针计算错误，后修正为i=1为默认值。
+cm.panel[panel_key].k 可以取得历史光标位置
 
 ##初始化例子
 ```html
