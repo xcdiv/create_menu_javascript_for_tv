@@ -1124,7 +1124,7 @@ var cm = {
         var down = 0;
         cm.panel[_val.item]._val = _val;
 
-        if (_val.k == 1) {
+        if (_val.k == 0) {
             cm.panel[_val.item].point = 0;
             down = cm.panel[_val.item].base_diff;
             cm.nnode.parents(_val.item).css(_val.css_obj, down);
@@ -1145,7 +1145,7 @@ var cm = {
 
          var top = 0;
          cm.panel[_val.item]._val = _val;
-         if (_val.k == 1) {
+         if (_val.k == 0) {
              cm.panel[_val.item].point = 0;
              top = cm.panel[_val.item].base_diff;
              cm.nnode.parents(_val.item).css(_val.css_obj, top);
