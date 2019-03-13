@@ -692,7 +692,7 @@ var cm = {
             this.setarea({ area_id: _master, point_id: _point });
         }
         var _so = []; //$j(_selectobj);
-        if (!_selectobj && cm.nnode.length > 0) {
+        if (!_selectobj && cm.nnode && cm.nnode.length > 0) {
             _so = cm.nnode;
         } else {
             _so = $j(_selectobj);
