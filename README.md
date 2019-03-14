@@ -366,7 +366,10 @@ style定义：
 ```html
 <li ............  href="http://www.baidu.com">1</li>
 ```
-##panel滑动区块 0.7.6更改
+
+
+#CM的内置方法
+##cm.panel滑动区块 0.7.6更改
 
 	panel是实现滑动光标块的效果
 	*代码中初始化：
@@ -433,4 +436,19 @@ style定义：
 		所以需要在代码中增加一个预处理 
 		例如：
         cm.nnode = $j('#area_line0 li[path]:first');
+
+
+##cm.unpoint 清理DOM重新渲染后的方法
+cm.unpoint();   快速清理
+cm.unpoint(_master, _point, _selectobj); 精确清理
+_master::域   例如：#area_select
+_point::光标  例如：#point
+_selectobj::要清理的对象  #line0 li[path]:first
+
+cm.unpoint(null, null, _selectobj); 泛清理
+
+_selectobj::要清理的对象  #area_select li[select=true]
+
+
+
 
