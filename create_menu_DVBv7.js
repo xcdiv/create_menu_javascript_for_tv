@@ -666,9 +666,8 @@ var jsmobj = [];
 
 jsmobj = new Jsmarquee();
 
-
 var cm = {
-    version: "0.7.6.1",
+    version: "0.7.7",
     __self: [],
     nnode: [],      //下一个 dom
     lnode: [],      //当前的 dom
@@ -692,7 +691,7 @@ var cm = {
             this.setarea({ area_id: _master, point_id: _point });
         }
         var _so = []; //$j(_selectobj);
-        if (!_selectobj && cm.nnode && cm.nnode.length > 0) {
+        if (!_selectobj && cm.nnode.length > 0) {
             _so = cm.nnode;
         } else {
             _so = $j(_selectobj);
@@ -776,8 +775,32 @@ var cm = {
         }
         return this;
 
-    },
+    }
+     , set_key_path: function (obj, path_block, value) {
+         var pathEnum = {
+             top: 0,
+             right: 1,
+             down: 2,
+             left: 3,
+         };
+         obj.each(function (index, _obj) {
+             var o = $j(_obj);
 
+             var attr = cm.attrib2node(o);
+
+             var path = attr["path"].substring(1, attr["path"].length - 1).split('\',\'');
+
+             path[pathEnum[path_block]] = value;
+
+             var _path = "'" + path.join("','") + "'";
+
+
+             o.attr("path", _path);
+
+         });
+
+
+     },
     attrib2node: function (obj) {
         var _node = [];
         var attrs = ["path", "href", "keyclick", "outclass", "outstyle", "trigger", "leave_trigger", "inclass", "instyle", "objectstyle", "parentstyle", "pointstyle", "panel"];
@@ -1074,18 +1097,18 @@ var cm = {
         if (eq <= 0) {
             eq = 0;
         }
+
         var next = $j(next_lisen + " " + next_lisen_c.replace('index', eq));
         if (next.length > 0) {
             return this.proc(next, lisen);
         } else {
-            if ($j(next_lisen + " [path]:last").length == 0) {
+            if ($j(next_lisen + " [path]:visible:last").length == 0) {
                 return this;
             }
-            return this.proc($j(next_lisen + " [path]:last"), lisen);
+            return this.proc($j(next_lisen + " [path]:visible:last"), lisen);
         }
         return this;
     },
-
     //选择
     select_lock: function (nlisen) {
 
@@ -1134,8 +1157,8 @@ var cm = {
             cm.nnode.parents(_val.item).css(_val.css_obj, down);
         }
             //else if (k != 0 || (k > cm.panel[item].point && k < (cm.panel[item].size + cm.panel[item].point))) { }
-        else if (_val.k == (cm.panel[_val.item].point + cm.panel[_val.item].size) && _val.len > cm.panel[_val.item].size) {
-            down = (cm.panel[_val.item].point) * cm.panel[_val.item].diff;
+        else if (_val.k == (cm.panel[_val.item].point + cm.panel[_val.item].size) && _val.len > cm.panel[_val.item].size) { 
+            down = (cm.panel[_val.item].point) * cm.panel[_val.item].diff;  
             cm.panel[_val.item].point++;
             cm.nnode.parents(_val.item).css(_val.css_obj, down);
         }
@@ -1151,20 +1174,27 @@ var cm = {
              cm.nnode.parents(_val.item).css(_val.css_obj, top);
          }
          else if (_val.k == _val.len) {
-
+             
              cm.panel[_val.item].point = (_val.len - cm.panel[_val.item].size);
+             if (cm.panel[_val.item].point < 0) {
+                 cm.panel[_val.item].point = 0;
+             }
              top = cm.panel[_val.item].point * cm.panel[_val.item].diff;;
              cm.nnode.parents(_val.item).css(_val.css_obj, top);
          }
          else if (_val.k == _val.len && _val.k < _val.len && _val.len > cm.panel[_val.item].size) {
              cm.panel[_val.item].point = _val.len - cm.panel[_val.item].size;
+             if (cm.panel[_val.item].point < 0) {
+                 cm.panel[_val.item].point = 0;
+             }
+
              top = (_val.len - cm.panel[_val.item].size) * cm.panel[_val.item].diff;
              cm.nnode.parents(_val.item).css(_val.css_obj, top);
          }
          else if (_val.k == cm.panel[_val.item].point && _val.len > cm.panel[_val.item].size) {
-
-             top = (cm.panel[_val.item].point - 1) * cm.panel[_val.item].diff;
-
+            
+            top = (cm.panel[_val.item].point - 1) * cm.panel[_val.item].diff;
+          
              cm.nnode.parents(_val.item).css(_val.css_obj, top);
              if (cm.panel[_val.item].point > 0) {
                  cm.panel[_val.item].point--;
@@ -1176,7 +1206,7 @@ var cm = {
 
         if (cm.nnode) {
             var _val = { "item": _item, "k": k, "len": len, "css_obj": css_obj };
-            cm.panel[_val.item].k = k;
+
             switch (cm.panel[_item].mode) {
                 case "right>left":
                     if (cm.keyevent == key.Left) {
@@ -1214,20 +1244,19 @@ var cm = {
 
         //    var _debug = cm.nnode;
         //
-        //  $j('#debug').html(
-        //       "K=" + _val.k
-        //       + "<br> point=" + cm.panel[_item].point
-        //       + "<br> size=" +  cm.panel[_item].size
-        //       + "<br> diff=" +  cm.panel[_item].diff
-        //       + "<br> mode=" +  cm.panel[_item].mode
-        //       + "<br> _val.len=" + _val.len
-        //      ).show();
-
+        /*
+           $j('#debug').html(
+                "K=" + _val.k
+                + "<br> point=" + cm.panel[_item].point
+                + "<br> size=" +  cm.panel[_item].size
+                + "<br> diff=" +  cm.panel[_item].diff
+                + "<br> mode=" +  cm.panel[_item].mode
+                + "<br> _val.len=" + _val.len
+               ).show();
+        */
         //{ point: 0, size: 7, diff: -51, base_diff: 0, mode: "up>down" }
 
     }
 };
-
-
 
 cm.init();
