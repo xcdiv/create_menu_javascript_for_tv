@@ -1,5 +1,6 @@
-﻿
 ###DOM 扩展框架 create_menu_DVB for TV version 0.7.7
+
+
 ##Project Objectives:
 Encapsulates the keyboard's top, bottom, and right sides and confirms the corresponding logic with the HTML DOM, simplifying the handling of events for each DOM object by encapsulating the DOM's attributes
 (I am sorry, because the time constraints and examples are very simple, I will gradually improve)
