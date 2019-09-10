@@ -1,6 +1,5 @@
 ﻿
-###DOM 扩展框架 create_menu_DVB for TV version 0.7.6.3
-
+###DOM 扩展框架 create_menu_DVB for TV version 0.7.7
 ##Project Objectives:
 Encapsulates the keyboard's top, bottom, and right sides and confirms the corresponding logic with the HTML DOM, simplifying the handling of events for each DOM object by encapsulating the DOM's attributes
 (I am sorry, because the time constraints and examples are very simple, I will gradually improve)
@@ -366,7 +365,11 @@ style定义：
 ```html
 <li ............  href="http://www.baidu.com">1</li>
 ```
+##修改path属性
+cm.set_key_path(jQuery DOM,"top","right","down","left",path info);
 
+例子：
+cm.set_key_path($j('#keyword li.left_api'), "top", ":jump{#area_select,#top_menu li[path][cmi=jmhk]}");
 
 #CM的内置方法
 ##cm.panel滑动区块 0.7.6更改
