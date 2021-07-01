@@ -781,7 +781,7 @@ var cm = {
              top: 0,
              right: 1,
              down: 2,
-             left: 3,
+             left: 3
          };
          obj.each(function (index, _obj) {
              var o = $j(_obj);
