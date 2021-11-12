@@ -443,12 +443,17 @@ cm.set_key_path($j('#keyword li.left_api'), "top", ":jump{#area_select,#top_menu
 
 
 ##cm.unpoint 清理DOM重新渲染后的方法
+	
 cm.unpoint();   快速清理
+	
 cm.unpoint(_master, _point, _selectobj); 精确清理
+	
 _master::域   例如：#area_select
+	
 _point::光标  例如：#point
+	
 _selectobj::要清理的对象  #line0 li[path]:first
-
+	
 cm.unpoint(null, null, _selectobj); 泛清理
 
 _selectobj::要清理的对象  #area_select li[select=true]
